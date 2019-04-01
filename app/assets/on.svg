@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="28px" viewBox="0 0 60 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>on</title>
+    <desc>Created with Sketch.</desc>
+    <g id="on" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(1.000000, 1.000000)">
+            <path d="M45,26 L13,26 C5.85,26 0,20.15 0,13 C0,5.85 5.85,0 13,0 L45,0 C52.15,0 58,5.85 58,13 C58,20.15 52.15,26 45,26 Z" id="Path" fill="#E7ECED"></path>
+            <circle id="Oval" stroke="#659C35" stroke-width="2" fill="#88C057" stroke-linecap="round" cx="45" cy="13" r="9"></circle>
+        </g>
+    </g>
+</svg>
