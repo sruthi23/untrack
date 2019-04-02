@@ -34,8 +34,8 @@ export default class LeftMenu extends Component {
         </div>
         <Link to={routes.COUNTER}>Settings</Link>
         <Link to={routes.CUSTOMDOMAINS}>Fileter List</Link>
-        <Link to={routes.CUSTOMDOMAINS}>Whitelist</Link>
-        <Link to={routes.CUSTOMDOMAINS}>About</Link>
+        <Link to={routes.WHITELIIST}>Whitelist</Link>
+        <Link to={routes.ABOUT}>About</Link>
       </div>
     );
   }

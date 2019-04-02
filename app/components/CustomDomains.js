@@ -1,11 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Table, AutoComplete } from 'element-react';
+import { Layout, Table, AutoComplete, Button } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 
 import routes from '../constants/routes';
+
+const shell = require('shelljs');
 
 export default class CustomDomains extends Component {
   constructor(props) {
@@ -127,6 +129,11 @@ export default class CustomDomains extends Component {
 
   handleSelect(item) {}
 
+  buttonClick() {
+    console.log('click');
+    shell.echo('hello world');
+  }
+
   render() {
     return (
       <div className="container">
@@ -142,22 +149,9 @@ export default class CustomDomains extends Component {
 
               <h1>CustomDomains</h1>
 
-              <AutoComplete
-                placeholder="Please input"
-                value={this.state.value1}
-                fetchSuggestions={this.querySearch.bind(this)}
-                onSelect={this.handleSelect.bind(this)}
-              />
-
-              <Table
-                style={{ width: '100%' }}
-                columns={this.state.columns}
-                data={this.state.data}
-                border={false}
-                onCurrentChange={item => {
-                  console.log(item);
-                }}
-              />
+              <Button type="primary" onClick={this.buttonClick.bind(this)}>
+                Test this
+              </Button>
             </div>
           </Layout.Col>
         </Layout.Row>

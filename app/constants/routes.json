@@ -1,5 +1,7 @@
 {
   "HOME": "/",
   "COUNTER": "/counter",
-  "CUSTOMDOMAINS": "/customdomains"
+  "CUSTOMDOMAINS": "/customdomains",
+  "ABOUT": "/about",
+  "WHITELIIST": "/whitelist"
 }
