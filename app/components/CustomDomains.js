@@ -1,11 +1,10 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Layout, Table, AutoComplete, Button } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 
-import routes from '../constants/routes';
+import db from '../utils/db';
 
 const shell = require('shelljs');
 const sudo = require('sudo-prompt');
@@ -135,40 +134,29 @@ export default class CustomDomains extends Component {
   handleSelect(item) {}
 
   buttonClick() {
-    // const version = shell.which('node');
-    // shell.config.execPath = version.stdout;
-    //
-    // shell.exec('sudo su');
-
-    sudo.exec('sh app/scripts/init.sh', options, (error, stdout, stderr) => {
+    const isInitial = db.get('initial').value();
+    const script = isInitial === true ? 'init.sh' : 'reset.sh';
+    sudo.exec(`sh app/scripts/${script}`, options, (error, stdout, stderr) => {
       if (error) throw error;
       console.log(`stdout: ${stdout}`);
+      db.set('initial', false).write();
     });
-
-    // sudo.exec(
-    //   'pwd cp /etc/hosts && sudo cp app/assets/hosts /etc/hosts && sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder',
-    //   options,
-    //   (error, stdout, stderr) => {
-    //     if (error) throw error;
-    //     console.log(`stdout: ${stdout}`);
-    //   }
-    // );
   }
 
   render() {
     return (
       <div className="container">
-        <Layout.Row gutter="20">
+        <Layout.Row>
           <Layout.Col span="6">
             <div className="grid-content home-left">
               <LeftMenu />
             </div>
           </Layout.Col>
           <Layout.Col span="18">
-            <div className="grid-content home-right">
-              <Head />
+            <Head />
 
-              <h1>CustomDomains</h1>
+            <div className="grid-content home-right">
+              <h1>Filter List</h1>
 
               <Button type="primary" onClick={this.buttonClick.bind(this)}>
                 Test this

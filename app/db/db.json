@@ -6,5 +6,6 @@
     "porn": false,
     "social": false
   },
-  "settings": {}
+  "settings": {},
+  "initial": false
 }

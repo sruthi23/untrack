@@ -13,7 +13,8 @@ db.defaults({
     porn: false,
     social: false
   },
-  settings: {}
+  settings: {},
+  initial: true
 }).write();
 
 export default db;

@@ -5,17 +5,37 @@
 @import '~element-theme-default/lib/reset.css';
 @import '~element-theme-default/lib/index.css';
 
+/* Your local CSS File */
+@font-face {
+  font-family: 'Aleo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Aleo Regular'), local('Aleo-Regular'),
+    url(assets/fonts/Aleo-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Aleo';
+  font-style: bold;
+  font-weight: 700;
+  src: local('Aleo Bold'), local('Aleo-Bold'),
+    url(assets/fonts/Aleo-Bold.ttf) format('truetype');
+}
+
 $light-black: #324057;
 $dark-white: #f9fafc;
 $black: #1f2d3d;
 $light-grey: #e5e9f2;
 $light-silver: #99a9bf;
+$red: #d21626;
 
 body {
   height: 100vh;
   padding: 0;
   background: $light-grey;
   color: $dark-white;
+  font-family: 'Aleo', serif !important;
+  letter-spacing: 1px;
 }
 h1,
 h2,
@@ -24,8 +44,21 @@ h4,
 h5 {
   color: $black;
   font-weight: bold;
+  margin-bottom: 5px;
 }
-
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+h2 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  line-height: 23px;
+}
+p {
+  margin-bottom: 30px;
+  color: $black;
+}
 .titlebar {
   -webkit-user-select: none;
   -webkit-app-region: drag;
@@ -45,10 +78,8 @@ button {
     height: 100vh;
 
     .el-col {
-      height: 100vh;
-      padding-top: 50px;
       &:first-child {
-        background: $dark-white;
+        background: $black;
       }
       &:last-child {
         padding: 0 !important;
@@ -56,19 +87,23 @@ button {
     }
   }
 }
-
+.home-left,
+.home-right {
+  height: 100vh;
+  box-sizing: border-box;
+}
 .el-carousel__button {
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  background-color: $light-silver;
+}
+.el-carousel__indicator.is-active .el-carousel__button {
+  background-color: $red;
 }
 
 .headbar {
-  background: $light-silver;
   padding: 10px 0;
-  img {
-    cursor: pointer;
-  }
 }
 
 .el-checkbox {
@@ -80,7 +115,106 @@ button {
 .leftmenu {
   a {
     display: block;
-    margin: 10px;
+    padding: 15px;
     cursor: pointer;
+    &.active {
+      background: $light-grey;
+    }
   }
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+}
+
+.toggle {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 50px;
+  background: $red;
+  border-radius: 5px;
+  transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+.toggle:before,
+.toggle:after {
+  position: absolute;
+  line-height: 50px;
+  font-size: 14px;
+  z-index: 2;
+  transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+.toggle:before {
+  content: 'OFF';
+  left: 20px;
+  color: #d21626;
+}
+.toggle:after {
+  content: 'ON';
+  right: 20px;
+  color: #fff;
+}
+
+.toggle__handler {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  width: 65px;
+  height: 44px;
+  border-radius: 3px;
+  top: 3px;
+  left: 3px;
+  transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+}
+
+.toggle.on {
+  background: #66b317;
+}
+.toggle.on:before {
+  color: #fff;
+}
+.toggle.on:after {
+  color: #66b317;
+}
+.toggle.on .toggle__handler {
+  width: 54px;
+  -webkit-transform: translateX(60px);
+  transform: translateX(60px);
+  border-color: #fff;
+}
+
+.home-right {
+  padding: 40px;
+}
+
+ol {
+  li {
+    margin: 10px 0;
+  }
+}
+.clear::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+.carousel {
+  margin-top: 30vh;
+}
+.continueLink {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }

@@ -33,23 +33,25 @@ export default class Home extends Component<Props> {
   render() {
     return (
       <div className="container">
-        <Layout.Row gutter="20">
+        <Layout.Row>
           <Layout.Col span="12">
-            <div className="grid-content home-left">
-              <img src="assets/logo.svg" className="centered" width="120" />
+            <div className="grid-content centered home-left">
+              <img src="assets/logo.svg" width="120" />
             </div>
           </Layout.Col>
           <Layout.Col span="12">
-            <div className="grid-content home-right">
-              <Carousel height="250px" arrow="never">
+            <div className="grid-content carousel home-right">
+              <Carousel height="150px" arrow="never">
                 {elms.map((item, index) => (
                   <Carousel.Item key={index}>
-                    <h2>{item.title}</h2>
-                    <p>{item.desc}</p>
+                    <h1>{item.title}</h1>
+                    <h2>{item.desc}</h2>
                   </Carousel.Item>
                 ))}
               </Carousel>
-              <Link to={routes.COUNTER}>Continue...</Link>
+              <Link to={routes.COUNTER} className="continueLink">
+                Continue...
+              </Link>
             </div>
           </Layout.Col>
         </Layout.Row>

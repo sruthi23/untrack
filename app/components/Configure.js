@@ -19,17 +19,17 @@ export default class Configure extends Component {
   render() {
     return (
       <div className="container">
-        <Layout.Row gutter="20">
+        <Layout.Row>
           <Layout.Col span="6">
             <div className="grid-content home-left">
               <LeftMenu />
             </div>
           </Layout.Col>
           <Layout.Col span="18">
-            <div className="grid-content home-right">
-              <Head />
+            <Head />
 
-              <h1>Categories</h1>
+            <div className="grid-content home-right">
+              <h1>Settings</h1>
               <Checkbox.Group value={this.state.checkList}>
                 <Checkbox label="Unified hosts = (adware + malware)" />
                 <Checkbox label="fakenews" />

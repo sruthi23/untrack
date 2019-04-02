@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import routes from '../constants/routes';
 import db from '../utils/db';
@@ -17,21 +17,21 @@ export default class LeftMenu extends Component {
     super(props);
 
     this.state = {
-      statusicon: 'assets/on.svg'
+      isOn: 'toggle off'
     };
     this.toggleClick = this.toggleClick.bind(this);
   }
 
   toggleClick() {
-    if (this.state.statusicon === 'assets/on.svg') {
-      this.setState({ statusicon: 'assets/off.svg' });
+    if (this.state.isOn === 'toggle on') {
+      this.setState({ isOn: 'toggle off' });
     } else {
-      this.setState({ statusicon: 'assets/on.svg' });
+      this.setState({ isOn: 'toggle on' });
     }
 
-    sudo.exec('sh app/scripts/toggle.sh', options, (error, stdout, stderr) => {
+    sudo.exec('sh app/scripts/init.sh', options, (error, stdout, stderr) => {
       if (error) throw error;
-      console.log(`stdout: ${stdout}`);
+      db.set('config.initial', false).write();
     });
   }
 
@@ -39,16 +39,27 @@ export default class LeftMenu extends Component {
     return (
       <div className="leftmenu">
         <div className="toggleContainer">
-          <img
-            src={this.state.statusicon}
-            onClick={this.toggleClick}
-            width="80"
-          />
+          <div className="clear" />
+          <div className="toggleWrapper" onClick={this.toggleClick}>
+            <label className={this.state.isOn} htmlFor="dn">
+              <span className="toggle__handler" />
+            </label>
+          </div>
         </div>
-        <Link to={routes.COUNTER}>Settings</Link>
-        <Link to={routes.CUSTOMDOMAINS}>Fileter List</Link>
-        <Link to={routes.WHITELIIST}>Whitelist</Link>
-        <Link to={routes.ABOUT}>About</Link>
+        <div className="navContainer">
+          <NavLink to={routes.COUNTER} activeClassName="active">
+            Settings
+          </NavLink>
+          <NavLink to={routes.CUSTOMDOMAINS} activeClassName="active">
+            Filter List
+          </NavLink>
+          <NavLink to={routes.WHITELIIST} activeClassName="active">
+            Whitelist
+          </NavLink>
+          <NavLink to={routes.ABOUT} activeClassName="active">
+            About
+          </NavLink>
+        </div>
       </div>
     );
   }
