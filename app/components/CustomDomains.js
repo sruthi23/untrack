@@ -8,6 +8,11 @@ import LeftMenu from './LeftMenu';
 import routes from '../constants/routes';
 
 const shell = require('shelljs');
+const sudo = require('sudo-prompt');
+
+const options = {
+  name: 'Untrack'
+};
 
 export default class CustomDomains extends Component {
   constructor(props) {
@@ -130,8 +135,24 @@ export default class CustomDomains extends Component {
   handleSelect(item) {}
 
   buttonClick() {
-    console.log('click');
-    shell.echo('hello world');
+    // const version = shell.which('node');
+    // shell.config.execPath = version.stdout;
+    //
+    // shell.exec('sudo su');
+
+    sudo.exec('sh app/scripts/init.sh', options, (error, stdout, stderr) => {
+      if (error) throw error;
+      console.log(`stdout: ${stdout}`);
+    });
+
+    // sudo.exec(
+    //   'pwd cp /etc/hosts && sudo cp app/assets/hosts /etc/hosts && sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder',
+    //   options,
+    //   (error, stdout, stderr) => {
+    //     if (error) throw error;
+    //     console.log(`stdout: ${stdout}`);
+    //   }
+    // );
   }
 
   render() {

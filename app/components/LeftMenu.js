@@ -3,6 +3,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import routes from '../constants/routes';
+import db from '../utils/db';
+
+const shell = require('shelljs');
+const sudo = require('sudo-prompt');
+
+const options = {
+  name: 'Untrack'
+};
 
 export default class LeftMenu extends Component {
   constructor(props) {
@@ -20,6 +28,11 @@ export default class LeftMenu extends Component {
     } else {
       this.setState({ statusicon: 'assets/on.svg' });
     }
+
+    sudo.exec('sh app/scripts/toggle.sh', options, (error, stdout, stderr) => {
+      if (error) throw error;
+      console.log(`stdout: ${stdout}`);
+    });
   }
 
   render() {

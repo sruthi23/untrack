@@ -236,6 +236,7 @@
     "element-react": "^1.4.33",
     "element-theme-default": "^1.4.13",
     "history": "^4.7.2",
+    "lowdb": "^1.0.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-hot-loader": "^4.3.12",
@@ -245,7 +246,8 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "shelljs": "^0.8.3",
-    "source-map-support": "^0.5.9"
+    "source-map-support": "^0.5.9",
+    "sudo-prompt": "^8.2.5"
   },
   "devEngines": {
     "node": ">=7.x",

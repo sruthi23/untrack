@@ -1,0 +1,10 @@
+{
+  "config": {
+    "unified": true,
+    "fakenews": false,
+    "gambling": false,
+    "porn": false,
+    "social": false
+  },
+  "settings": {}
+}
