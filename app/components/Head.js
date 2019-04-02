@@ -21,14 +21,6 @@ export default class Head extends Component {
   }
 
   render() {
-    return (
-      <div className="headbar">
-        <img
-          src={this.state.statusicon}
-          onClick={this.toggleClick}
-          width="80"
-        />
-      </div>
-    );
+    return <div className="headbar">...</div>;
   }
 }
