@@ -1,15 +1,27 @@
 // @flow
 import React, { Component } from 'react';
 import { distanceInWordsToNow } from 'date-fns';
+import { Notification } from 'element-react';
 import db from '../utils/db';
+import download from '../utils/Downloader';
 
 export default class UpdateDatabase extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastUpdate: '--'
+      lastUpdate: '--',
+      progress: ''
     };
     this.updateHostsDatabase = this.updateHostsDatabase.bind(this);
+    this.notify = this.notify.bind(this);
+  }
+
+  notify() {
+    Notification({
+      title: 'Success',
+      message: 'Hosts database has been updated.',
+      type: 'success'
+    });
   }
 
   componentDidMount() {
@@ -18,8 +30,22 @@ export default class UpdateDatabase extends Component {
 
   updateHostsDatabase(e) {
     e.preventDefault();
-    db.set('lastUpdate', Date.now()).write();
-    this.updateLastUpdate();
+
+    const userPref = db.get('config').value();
+    const catstoFetch = Object.keys(userPref)
+      .filter(k => userPref[k])
+      .map(String);
+    const catsJoined = catstoFetch.join('-').replace('unified-', '');
+    const repoUrl = `https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/${catsJoined}/hosts`;
+
+    download(repoUrl, 'app/assets/hosts/user.hosts', (bytes, percent) => {
+      const progress = isNaN(bytes) ? '' : `Downloading ${bytes} bytes`;
+      this.setState({ progress: `${progress}` });
+    }).then(() => {
+      db.set('lastUpdate', Date.now()).write();
+      this.updateLastUpdate();
+      this.notify();
+    });
   }
 
   updateLastUpdate() {
@@ -35,11 +61,12 @@ export default class UpdateDatabase extends Component {
       <div className="updatedatabase">
         <h2>Update hosts database</h2>
         <p>
-          Your local database is is updated <b>{this.state.lastUpdate}</b>{' '}
+          Your local database is updated <b>{this.state.lastUpdate}</b>{' '}
           <a href="#" onClick={this.updateHostsDatabase}>
             update now
           </a>
         </p>
+        <p>{this.state.progress}</p>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import Head from './Head';
 import LeftMenu from './LeftMenu';
 
 import db from '../utils/db';
+import download from '../utils/Downloader';
 
 const shell = require('shelljs');
 const sudo = require('sudo-prompt');
@@ -19,13 +20,19 @@ export default class CustomDomains extends Component {
   }
 
   buttonClick() {
-    const isInitial = db.get('initial').value();
-    const script = isInitial === true ? 'init.sh' : 'reset.sh';
-    sudo.exec(`sh app/scripts/${script}`, options, (error, stdout, stderr) => {
-      if (error) throw error;
-      console.log(`stdout: ${stdout}`);
-      db.set('initial', false).write();
-    });
+    download(
+      'https://download.damieng.com/fonts/original/EnvyCodeR-PR7.zip',
+      'app/assets/hosts/envy-code-r.zip',
+      (bytes, percent) => console.log(`Downloaded ${bytes} (${percent})`)
+    );
+
+    // const isInitial = db.get('initial').value();
+    // const script = isInitial === true ? 'init.sh' : 'reset.sh';
+    // sudo.exec(`sh app/scripts/${script}`, options, (error, stdout, stderr) => {
+    //   if (error) throw error;
+    //   console.log(`stdout: ${stdout}`);
+    //   db.set('initial', false).write();
+    // });
   }
 
   render() {

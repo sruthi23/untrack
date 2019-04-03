@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Button, Checkbox, Form } from 'element-react';
+import { Notification } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 import UpdateDatabase from './UpdateDatabase';
@@ -17,6 +18,15 @@ export default class Configure extends Component {
       config: db.get('config').value(),
       form: {}
     };
+    this.notify = this.notify.bind(this);
+  }
+
+  notify() {
+    Notification({
+      title: 'Success',
+      message: 'Your preferences have been saved.',
+      type: 'success'
+    });
   }
 
   componentWillMount() {
@@ -56,6 +66,7 @@ export default class Configure extends Component {
     this.setState({ config: configCopy }, () => {
       db.set('config', this.state.config).write();
     });
+    this.notify();
   }
 
   render() {
@@ -87,6 +98,8 @@ export default class Configure extends Component {
                       label="Unified hosts = (adware + malware)"
                       value="unified"
                       name="type"
+                      checked
+                      disabled
                     />
                     <Checkbox label="Fakenews" value="fakenews" name="type" />
                     <Checkbox label="Gambling" value="gambling" name="type" />

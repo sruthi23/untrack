@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
-# back up current hosts file
-sudo cp /etc/hosts app/assets/hosts.toggle.backup
+source $(dirname $0)/functions.sh
 
-# load basic non-blocking-anything hosts file
-sudo cp app/assets/hosts /etc/hosts
+args=("$@")
 
-# clear DNS cache
-sudo dscacheutil -flushcache
-sudo killall -HUP mDNSResponder
+if [ ${args[0]} = 'on' ]
+then
+  onUntrack
+else
+  offUntrack
+fi
+
+clearDNSCache
+
+echo 'success'

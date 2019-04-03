@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Notification } from 'element-react';
 
 import routes from '../constants/routes';
 import db from '../utils/db';
@@ -20,20 +21,58 @@ export default class LeftMenu extends Component {
       isOn: 'toggle off'
     };
     this.toggleUntrack = this.toggleUntrack.bind(this);
+    this.notifyErr = this.notifyErr.bind(this);
+    this.notifySucess = this.notifySucess.bind(this);
+  }
+
+  notifyErr() {
+    Notification.error({
+      title: 'Error',
+      message: 'You havent authenticated'
+    });
+  }
+
+  notifySucess() {
+    Notification({
+      title: 'Success',
+      message: 'Untrack is running',
+      type: 'success'
+    });
+  }
+
+  notifyStop() {
+    Notification({
+      title: 'Warning',
+      message: 'Untrack is stopped',
+      type: 'warning'
+    });
+  }
+
+  componentDidMount() {
+    const isRunning = db.get('isRunning').value();
+    const toggleArg = isRunning ? 'on' : 'off';
+
+    this.setState({ isOn: `toggle ${toggleArg}` });
   }
 
   toggleUntrack() {
-    if (this.state.isOn === 'toggle on') {
-      this.setState({ isOn: 'toggle off' });
-    } else {
-      this.setState({ isOn: 'toggle on' });
-    }
-
-    sudo.exec('sh app/scripts/toggle.sh', options, (error, stdout, stderr) => {
-      if (error) throw error;
-      db.set('config.initial', false).write();
-      db.set('isRunning', true).write();
-    });
+    const isRunning = db.get('isRunning').value();
+    const toggleArg = isRunning ? 'off' : 'on';
+    console.log(isRunning, toggleArg, !!isRunning);
+    sudo.exec(
+      `sh app/scripts/toggle.sh ${toggleArg}`,
+      options,
+      (error, stdout, stderr) => {
+        if (error) {
+          this.notifyErr();
+        } else {
+          db.set('config.initial', false).write();
+          db.set('isRunning', !isRunning).write();
+          this.setState({ isOn: `toggle ${isRunning ? 'off' : 'on'}` });
+          isRunning ? this.notifyStop() : this.notifySucess();
+        }
+      }
+    );
   }
 
   render() {

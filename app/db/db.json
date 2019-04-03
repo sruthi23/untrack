@@ -7,12 +7,7 @@
     "social": true,
     "initial": false
   },
-  "settings": {},
-  "initial": false,
-  "db": {
-    "config": {}
-  },
-  "lastUpdate": 1554282719398,
-  "isrunning": false,
-  "isRunning": false
+  "initial": true,
+  "isRunning": true,
+  "lastUpdate": 1554306668864
 }
