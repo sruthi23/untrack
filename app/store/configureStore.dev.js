@@ -6,8 +6,6 @@ import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as counterActions from '../actions/counter';
 import type { counterStateType } from '../reducers/types';
-import axios from 'axios';
-import axiosMiddleware from 'redux-axios-middleware';
 
 const history = createHashHistory();
 
@@ -50,14 +48,6 @@ const configureStore = (initialState?: counterStateType) => {
       })
     : compose;
   /* eslint-enable no-underscore-dangle */
-
-  const client = axios.create({
-    //all axios can be used, shown in axios documentation
-    baseURL: 'https://raw.githubusercontent.com/StevenBlack/hosts/master',
-    responseType: 'arraybuffer'
-  });
-
-  middleware.push(axiosMiddleware(client));
 
   // Apply Middleware & Compose Enhancers
   enhancers.push(applyMiddleware(...middleware));
