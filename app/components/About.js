@@ -70,6 +70,15 @@ export default class About extends Component {
                     element-ui
                   </a>
                 </li>
+
+                <li>
+                  <a
+                    href="https://github.com/StevenBlack/hosts"
+                    target="_blank"
+                  >
+                    StevenBlack/hosts
+                  </a>
+                </li>
               </ol>
             </div>
           </Layout.Col>
