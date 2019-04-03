@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from 'element-react';
 import Head from './Head';
+import Support from './Support';
+
 import LeftMenu from './LeftMenu';
 
 import routes from '../constants/routes';

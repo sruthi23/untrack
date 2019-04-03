@@ -13,8 +13,9 @@ db.defaults({
     porn: false,
     social: false
   },
-  settings: {},
-  initial: true
+  initial: true,
+  isRunning: false,
+  lastUpdate: new Date()
 }).write();
 
 export default db;

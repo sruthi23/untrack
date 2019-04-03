@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, shell, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -108,4 +108,14 @@ app.on('ready', async () => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
+});
+
+process.on('uncaughtException', error => {
+  const messageBoxOptions = {
+    type: 'error',
+    title: 'Error in Main process',
+    message: error
+  };
+  dialog.showMessageBox(messageBoxOptions);
+  throw err;
 });

@@ -1,8 +1,8 @@
 {
   "config": {
-    "unified": false,
-    "fakenews": false,
-    "gambling": false,
+    "unified": true,
+    "fakenews": true,
+    "gambling": true,
     "porn": false,
     "social": true,
     "initial": false
@@ -11,5 +11,8 @@
   "initial": false,
   "db": {
     "config": {}
-  }
+  },
+  "lastUpdate": 1554276896975,
+  "isrunning": false,
+  "isRunning": false
 }

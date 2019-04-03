@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Layout, Button, Checkbox, Form } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
+import UpdateDatabase from './UpdateDatabase';
 
 import routes from '../constants/routes';
 import db from '../utils/db';
@@ -20,17 +21,16 @@ export default class Configure extends Component {
 
   componentWillMount() {
     const { config } = this.state;
-    let cheklist = [];
+    const cheklist = [];
 
-    Object.keys(config).map(function(key, index) {
+    Object.keys(config).map((key, index) => {
       console.log(key, config[key]);
       if (config[key] === true) {
         cheklist.push(key);
       }
     });
-    console.log(cheklist);
     this.setState({
-      form: Object.assign({}, this.state.form, { ['type']: cheklist })
+      form: Object.assign({}, this.state.form, { type: cheklist })
     });
   }
 
@@ -43,9 +43,9 @@ export default class Configure extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { type } = this.state.form;
-    let configCopy = Object.assign({}, this.state.config);
+    const configCopy = Object.assign({}, this.state.config);
 
-    Object.keys(configCopy).map(function(key, index) {
+    Object.keys(configCopy).map((key, index) => {
       if (type.indexOf(key) > -1) {
         configCopy[key] = true;
       } else {
@@ -76,7 +76,7 @@ export default class Configure extends Component {
                 ref="form"
                 className="en-US"
                 model={this.state.form}
-                labelWidth="120"
+                labelWidth="0"
               >
                 <Form.Item prop="type">
                   <Checkbox.Group
@@ -88,10 +88,10 @@ export default class Configure extends Component {
                       value="unified"
                       name="type"
                     />
-                    <Checkbox label="fakenews" value="fakenews" name="type" />
-                    <Checkbox label="gambling" value="gambling" name="type" />
-                    <Checkbox label="porn" value="porn" name="type" />
-                    <Checkbox label="social" value="social" name="type" />
+                    <Checkbox label="Fakenews" value="fakenews" name="type" />
+                    <Checkbox label="Gambling" value="gambling" name="type" />
+                    <Checkbox label="Porn" value="porn" name="type" />
+                    <Checkbox label="Social" value="social" name="type" />
                   </Checkbox.Group>
                 </Form.Item>
                 <Form.Item>
@@ -100,6 +100,7 @@ export default class Configure extends Component {
                   </Button>
                 </Form.Item>
               </Form>
+              <UpdateDatabase />
             </div>
           </Layout.Col>
         </Layout.Row>
