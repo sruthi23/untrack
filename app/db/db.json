@@ -4,10 +4,10 @@
     "fakenews": true,
     "gambling": true,
     "porn": true,
-    "social": true,
+    "social": false,
     "initial": false
   },
   "initial": true,
   "isRunning": true,
-  "lastUpdate": 1554306668864
+  "lastUpdate": 1554309645631
 }
