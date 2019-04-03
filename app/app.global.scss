@@ -6,20 +6,39 @@
 @import '~element-theme-default/lib/index.css';
 
 /* Your local CSS File */
+/* aleo-regular - latin */
 @font-face {
   font-family: 'Aleo';
   font-style: normal;
   font-weight: 400;
+  src: url('assets/fonts/aleo-v2-latin-regular.eot'); /* IE9 Compat Modes */
   src: local('Aleo Regular'), local('Aleo-Regular'),
-    url(assets/fonts/Aleo-Regular.ttf) format('truetype');
+    url('assets/fonts/aleo-v2-latin-regular.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ url('assets/fonts/aleo-v2-latin-regular.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */ url('assets/fonts/aleo-v2-latin-regular.woff')
+      format('woff'),
+    /* Modern Browsers */ url('assets/fonts/aleo-v2-latin-regular.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */
+      url('assets/fonts/aleo-v2-latin-regular.svg#Aleo') format('svg'); /* Legacy iOS */
 }
-
+/* aleo-700 - latin */
 @font-face {
   font-family: 'Aleo';
-  font-style: bold;
+  font-style: normal;
   font-weight: 700;
+  src: url('assets/fonts/aleo-v2-latin-700.eot'); /* IE9 Compat Modes */
   src: local('Aleo Bold'), local('Aleo-Bold'),
-    url(assets/fonts/Aleo-Bold.ttf) format('truetype');
+    url('assets/fonts/aleo-v2-latin-700.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('assets/fonts/aleo-v2-latin-700.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('assets/fonts/aleo-v2-latin-700.woff')
+      format('woff'),
+    /* Modern Browsers */ url('assets/fonts/aleo-v2-latin-700.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */ url('assets/fonts/aleo-v2-latin-700.svg#Aleo')
+      format('svg'); /* Legacy iOS */
 }
 
 $light-black: #324057;

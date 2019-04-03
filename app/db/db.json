@@ -1,9 +1,9 @@
 {
   "config": {
-    "unified": false,
-    "fakenews": false,
-    "gambling": false,
-    "porn": false,
+    "unified": true,
+    "fakenews": true,
+    "gambling": true,
+    "porn": true,
     "social": true,
     "initial": false
   },
