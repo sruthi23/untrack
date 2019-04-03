@@ -117,8 +117,12 @@ button {
     display: block;
     padding: 15px;
     cursor: pointer;
+    font-size: 15px;
+    color: $dark-white;
+    font-weight: bold;
     &.active {
       background: $light-grey;
+      color: $black;
     }
   }
 }
@@ -211,10 +215,17 @@ ol {
   display: table;
 }
 .carousel {
-  margin-top: 30vh;
+  padding-top: 35vh;
 }
 .continueLink {
   position: fixed;
   bottom: 20px;
   right: 20px;
+}
+.footer {
+  position: fixed;
+  background: #ff0303;
+  bottom: 0;
+  right: 0;
+  height: 30px;
 }

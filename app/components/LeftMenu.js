@@ -19,10 +19,10 @@ export default class LeftMenu extends Component {
     this.state = {
       isOn: 'toggle off'
     };
-    this.toggleClick = this.toggleClick.bind(this);
+    this.toggleUntrack = this.toggleUntrack.bind(this);
   }
 
-  toggleClick() {
+  toggleUntrack() {
     if (this.state.isOn === 'toggle on') {
       this.setState({ isOn: 'toggle off' });
     } else {
@@ -40,7 +40,7 @@ export default class LeftMenu extends Component {
       <div className="leftmenu">
         <div className="toggleContainer">
           <div className="clear" />
-          <div className="toggleWrapper" onClick={this.toggleClick}>
+          <div className="toggleWrapper" onClick={this.toggleUntrack}>
             <label className={this.state.isOn} htmlFor="dn">
               <span className="toggle__handler" />
             </label>
