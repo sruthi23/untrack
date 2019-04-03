@@ -106,7 +106,7 @@
       "provider": "github",
       "owner": "untrack-app",
       "repo": "untrack-app",
-      "private": false
+      "private": true
     }
   },
   "repository": {
