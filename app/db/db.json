@@ -1,11 +1,15 @@
 {
   "config": {
-    "unified": true,
+    "unified": false,
     "fakenews": false,
     "gambling": false,
     "porn": false,
-    "social": false
+    "social": true,
+    "initial": false
   },
   "settings": {},
-  "initial": false
+  "initial": false,
+  "db": {
+    "config": {}
+  }
 }
