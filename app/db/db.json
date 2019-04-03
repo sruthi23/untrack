@@ -3,7 +3,7 @@
     "unified": true,
     "fakenews": true,
     "gambling": true,
-    "porn": false,
+    "porn": true,
     "social": true,
     "initial": false
   },
@@ -12,7 +12,7 @@
   "db": {
     "config": {}
   },
-  "lastUpdate": 1554276896975,
+  "lastUpdate": 1554282719398,
   "isrunning": false,
   "isRunning": false
 }

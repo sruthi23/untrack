@@ -54,7 +54,7 @@ const configureStore = (initialState?: counterStateType) => {
   const client = axios.create({
     //all axios can be used, shown in axios documentation
     baseURL: 'https://raw.githubusercontent.com/StevenBlack/hosts/master',
-    responseType: 'json'
+    responseType: 'arraybuffer'
   });
 
   middleware.push(axiosMiddleware(client));
