@@ -64,6 +64,9 @@
       "app/app.html",
       "app/main.prod.js",
       "app/main.prod.js.map",
+      "app/scripts/",
+      "app/db/",
+      "app/assets/",
       "package.json"
     ],
     "dmg": {
@@ -101,14 +104,14 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
+      "owner": "untrack-app",
+      "repo": "untrack-app",
       "private": false
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/untrack-app/untrack-app.git"
   },
   "license": "MIT",
   "keywords": [
