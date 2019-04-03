@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Layout, Button, Checkbox, Form } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
+import UpdateDatabase from './UpdateDatabase';
 
 import routes from '../constants/routes';
 import db from '../utils/db';
@@ -87,10 +88,10 @@ export default class Configure extends Component {
                       value="unified"
                       name="type"
                     />
-                    <Checkbox label="fakenews" value="fakenews" name="type" />
-                    <Checkbox label="gambling" value="gambling" name="type" />
-                    <Checkbox label="porn" value="porn" name="type" />
-                    <Checkbox label="social" value="social" name="type" />
+                    <Checkbox label="Fakenews" value="fakenews" name="type" />
+                    <Checkbox label="Gambling" value="gambling" name="type" />
+                    <Checkbox label="Porn" value="porn" name="type" />
+                    <Checkbox label="Social" value="social" name="type" />
                   </Checkbox.Group>
                 </Form.Item>
                 <Form.Item>
@@ -99,6 +100,7 @@ export default class Configure extends Component {
                   </Button>
                 </Form.Item>
               </Form>
+              <UpdateDatabase />
             </div>
           </Layout.Col>
         </Layout.Row>

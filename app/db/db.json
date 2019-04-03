@@ -11,5 +11,8 @@
   "initial": false,
   "db": {
     "config": {}
-  }
+  },
+  "lastUpdate": 1554276896975,
+  "isrunning": false,
+  "isRunning": false
 }
