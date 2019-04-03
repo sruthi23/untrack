@@ -9,5 +9,13 @@
   },
   "initial": true,
   "isRunning": true,
-  "lastUpdate": 1554309645631
+  "lastUpdate": 1554309645631,
+  "whitelist": [
+    {
+      "domain": "google.com"
+    },
+    {
+      "domain": "google1.com"
+    }
+  ]
 }

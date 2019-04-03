@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Button, Checkbox, Form } from 'element-react';
-import { Notification } from 'element-react';
+import { Layout, Button, Checkbox, Form, Notification } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 import UpdateDatabase from './UpdateDatabase';

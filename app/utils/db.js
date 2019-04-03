@@ -15,7 +15,17 @@ db.defaults({
   },
   initial: true,
   isRunning: false,
+  whitelist: [],
   lastUpdate: new Date()
 }).write();
+
+db._.mixin({
+  pushUnique(array, key, newEl) {
+    if (array.findIndex(el => el[key] === newEl[key]) === -1) {
+      array.push(newEl);
+    }
+    return array;
+  }
+});
 
 export default db;
