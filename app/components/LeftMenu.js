@@ -29,9 +29,10 @@ export default class LeftMenu extends Component {
       this.setState({ isOn: 'toggle on' });
     }
 
-    sudo.exec('sh app/scripts/init.sh', options, (error, stdout, stderr) => {
+    sudo.exec('sh app/scripts/toggle.sh', options, (error, stdout, stderr) => {
       if (error) throw error;
       db.set('config.initial', false).write();
+      db.set('isRunning', true).write();
     });
   }
 

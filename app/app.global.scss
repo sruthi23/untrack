@@ -4,41 +4,46 @@
  */
 @import '~element-theme-default/lib/reset.css';
 @import '~element-theme-default/lib/index.css';
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 /* Your local CSS File */
 /* aleo-regular - latin */
+
+/* pt-sans-regular - latin */
 @font-face {
-  font-family: 'Aleo';
+  font-family: 'PT Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('assets/fonts/aleo-v2-latin-regular.eot'); /* IE9 Compat Modes */
-  src: local('Aleo Regular'), local('Aleo-Regular'),
-    url('assets/fonts/aleo-v2-latin-regular.eot?#iefix')
+  src: url('assets/fonts/pt-sans-v10-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('PT Sans'), local('PTSans-Regular'),
+    url('assets/fonts/pt-sans-v10-latin-regular.eot?#iefix')
       format('embedded-opentype'),
-    /* IE6-IE8 */ url('assets/fonts/aleo-v2-latin-regular.woff2')
+    /* IE6-IE8 */ url('assets/fonts/pt-sans-v10-latin-regular.woff2')
       format('woff2'),
-    /* Super Modern Browsers */ url('assets/fonts/aleo-v2-latin-regular.woff')
-      format('woff'),
-    /* Modern Browsers */ url('assets/fonts/aleo-v2-latin-regular.ttf')
+    /* Super Modern Browsers */
+      url('assets/fonts/pt-sans-v10-latin-regular.woff') format('woff'),
+    /* Modern Browsers */ url('assets/fonts/pt-sans-v10-latin-regular.ttf')
       format('truetype'),
     /* Safari, Android, iOS */
-      url('assets/fonts/aleo-v2-latin-regular.svg#Aleo') format('svg'); /* Legacy iOS */
+      url('assets/fonts/pt-sans-v10-latin-regular.svg#PTSans') format('svg'); /* Legacy iOS */
 }
-/* aleo-700 - latin */
+/* pt-sans-700 - latin */
 @font-face {
-  font-family: 'Aleo';
+  font-family: 'PT Sans';
   font-style: normal;
   font-weight: 700;
-  src: url('assets/fonts/aleo-v2-latin-700.eot'); /* IE9 Compat Modes */
-  src: local('Aleo Bold'), local('Aleo-Bold'),
-    url('assets/fonts/aleo-v2-latin-700.eot?#iefix') format('embedded-opentype'),
-    /* IE6-IE8 */ url('assets/fonts/aleo-v2-latin-700.woff2') format('woff2'),
-    /* Super Modern Browsers */ url('assets/fonts/aleo-v2-latin-700.woff')
+  src: url('assets/fonts/pt-sans-v10-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('PT Sans Bold'), local('PTSans-Bold'),
+    url('assets/fonts/pt-sans-v10-latin-700.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ url('assets/fonts/pt-sans-v10-latin-700.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */ url('assets/fonts/pt-sans-v10-latin-700.woff')
       format('woff'),
-    /* Modern Browsers */ url('assets/fonts/aleo-v2-latin-700.ttf')
+    /* Modern Browsers */ url('assets/fonts/pt-sans-v10-latin-700.ttf')
       format('truetype'),
-    /* Safari, Android, iOS */ url('assets/fonts/aleo-v2-latin-700.svg#Aleo')
-      format('svg'); /* Legacy iOS */
+    /* Safari, Android, iOS */
+      url('assets/fonts/pt-sans-v10-latin-700.svg#PTSans') format('svg'); /* Legacy iOS */
 }
 
 $light-black: #324057;
@@ -53,8 +58,9 @@ body {
   padding: 0;
   background: $light-grey;
   color: $dark-white;
-  font-family: 'Aleo', serif !important;
-  letter-spacing: 1px;
+  font-family: 'PT Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 h1,
 h2,
@@ -77,6 +83,7 @@ h2 {
 p {
   margin-bottom: 30px;
   color: $black;
+  font-size: 1rem;
 }
 .titlebar {
   -webkit-user-select: none;
@@ -127,10 +134,12 @@ button {
 
 .el-checkbox {
   display: block;
-  margin: 10px;
-  margin-left: 15px;
+  margin: 0 !important;
 }
 
+.el-checkbox + .el-checkbox {
+  margin: 0 !important;
+}
 .leftmenu {
   a {
     display: block;
