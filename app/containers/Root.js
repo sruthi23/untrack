@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import type { Store } from '../reducers/types';
 import Routes from '../Routes';
-import { PersistGate } from 'redux-persist/integration/react';
 
 type Props = {
   store: Store,
@@ -16,11 +15,9 @@ export default class Root extends Component<Props> {
     const { store, history, persistor } = this.props;
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <ConnectedRouter history={history}>
-            <Routes />
-          </ConnectedRouter>
-        </PersistGate>
+        <ConnectedRouter history={history}>
+          <Routes />
+        </ConnectedRouter>
       </Provider>
     );
   }

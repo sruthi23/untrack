@@ -38,6 +38,11 @@ class Configure extends Component {
     });
   }
 
+  componentDidMount() {
+    const { GetHost } = this.props;
+    GetHost(this.configFormat(this.state.config));
+  }
+
   configFormat(config) {
     const cheklist = [];
 

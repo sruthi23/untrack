@@ -45,6 +45,12 @@ class LeftMenu extends Component {
     });
   }
 
+  componentDidMount() {
+    const { ToggleUntrack } = this.props;
+    const isRunning = db.get('isRunning').value();
+    ToggleUntrack(isRunning);
+  }
+
   toggleUntrack = () => {
     const { ToggleUntrack } = this.props;
     const isRunning = db.get('isRunning').value();
