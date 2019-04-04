@@ -78,7 +78,7 @@ h2 {
   line-height: 23px;
 }
 p {
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
   color: $black;
   font-size: 1rem;
 }
@@ -98,16 +98,47 @@ button {
   width: 100%;
   max-width: 100%;
   .el-row {
-    height: 100vh;
-
     .el-col {
-      &:first-child {
+      height: 100vh;
+      &:first-of-type {
         background: $black;
+        position: fixed;
       }
       &:last-child {
         padding: 0 !important;
+        overflow: scroll;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        float: right;
       }
     }
+  }
+}
+.home-right {
+  .el-row {
+    margin-top: 20px;
+  }
+  .el-col {
+    height: auto !important;
+    background: none !important;
+    position: inherit !important;
+
+    &.el-col-12 {
+      // box-shadow: 0 3px 7px -1px rgba(#000, 0.1);
+      // border-radius: 5px;
+      // background: #fff !important;
+      padding: 10px;
+      box-sizing: border-box;
+      &:hover {
+        box-shadow: unset;
+        background: $light-grey !important;
+      }
+    }
+  }
+  p {
+    line-height: 20px;
+    clear: both;
+    font-size: 1.3rem;
   }
 }
 .home-left,
@@ -256,4 +287,19 @@ ol {
 }
 .el-notification__content {
   text-align: left !important;
+}
+
+.welcome {
+  img,
+  h1 {
+    float: left;
+  }
+  h1 {
+    font-size: 2rem;
+    line-height: 5rem;
+  }
+}
+
+.masthead {
+  margin-bottom: 50px;
 }
