@@ -1,21 +1,39 @@
 {
   "config": {
     "unified": true,
-    "fakenews": true,
+    "fakenews": false,
     "gambling": true,
     "porn": true,
-    "social": false,
+    "social": true,
     "initial": false
   },
   "initial": true,
   "isRunning": true,
-  "lastUpdate": 1554309645631,
+  "lastUpdate": 1554359661708,
   "whitelist": [
     {
       "domain": "google.com"
     },
     {
       "domain": "google1.com"
+    },
+    {
+      "domain": "sdfsdf.com"
+    },
+    {
+      "domain": "topo.kop"
+    },
+    {
+      "domain": "topotop.kop"
+    },
+    {
+      "domain": "wertop.kop"
+    },
+    {
+      "domain": "uop.com"
+    },
+    {
+      "domain": "yuop.lop"
     }
   ]
 }

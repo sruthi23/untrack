@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Notification } from 'element-react';
+import { connect } from 'react-redux';
 
 import routes from '../constants/routes';
 import db from '../utils/db';
@@ -13,13 +14,9 @@ const options = {
   name: 'Untrack'
 };
 
-export default class LeftMenu extends Component {
+class LeftMenu extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isOn: 'toggle off'
-    };
     this.toggleUntrack = this.toggleUntrack.bind(this);
     this.notifyErr = this.notifyErr.bind(this);
     this.notifySucess = this.notifySucess.bind(this);
@@ -48,17 +45,11 @@ export default class LeftMenu extends Component {
     });
   }
 
-  componentDidMount() {
+  toggleUntrack = () => {
+    const { ToggleUntrack } = this.props;
     const isRunning = db.get('isRunning').value();
     const toggleArg = isRunning ? 'on' : 'off';
 
-    this.setState({ isOn: `toggle ${toggleArg}` });
-  }
-
-  toggleUntrack() {
-    const isRunning = db.get('isRunning').value();
-    const toggleArg = isRunning ? 'off' : 'on';
-    console.log(isRunning, toggleArg, !!isRunning);
     sudo.exec(
       `sh app/scripts/toggle.sh ${toggleArg}`,
       options,
@@ -68,20 +59,25 @@ export default class LeftMenu extends Component {
         } else {
           db.set('config.initial', false).write();
           db.set('isRunning', !isRunning).write();
-          this.setState({ isOn: `toggle ${isRunning ? 'off' : 'on'}` });
+          ToggleUntrack(!isRunning);
           isRunning ? this.notifyStop() : this.notifySucess();
         }
       }
     );
-  }
+  };
 
   render() {
+    const { isRunning } = this.props;
+
     return (
       <div className="leftmenu">
         <div className="toggleContainer">
           <div className="clear" />
           <div className="toggleWrapper" onClick={this.toggleUntrack}>
-            <label className={this.state.isOn} htmlFor="dn">
+            <label
+              className={`toggle ${isRunning ? 'on' : 'off'}`}
+              htmlFor="dn"
+            >
               <span className="toggle__handler" />
             </label>
           </div>
@@ -104,3 +100,22 @@ export default class LeftMenu extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    isRunning: state.untrack.isRunning
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  ToggleUntrack: isRunning =>
+    dispatch({
+      type: 'TOGGLE_UNTRACK',
+      isRunning: isRunning
+    })
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LeftMenu);

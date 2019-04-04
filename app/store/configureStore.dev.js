@@ -6,10 +6,18 @@ import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as counterActions from '../actions/counter';
 import type { counterStateType } from '../reducers/types';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const history = createHashHistory();
 
+const persistConfig = {
+  key: 'root',
+  storage
+};
+
 const rootReducer = createRootReducer(history);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const configureStore = (initialState?: counterStateType) => {
   // Redux Configuration
@@ -54,7 +62,7 @@ const configureStore = (initialState?: counterStateType) => {
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = createStore(persistedReducer, initialState, enhancer);
 
   if (module.hot) {
     module.hot.accept(
