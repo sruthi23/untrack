@@ -5,11 +5,13 @@ import { Layout, Button, Checkbox, Form, Notification } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 import UpdateDatabase from './UpdateDatabase';
+import { connect } from 'react-redux';
 
+import { getHost } from '../actions';
 import routes from '../constants/routes';
 import db from '../utils/db';
 
-export default class Configure extends Component {
+class Configure extends Component {
   constructor(props) {
     super(props);
 
@@ -30,17 +32,21 @@ export default class Configure extends Component {
 
   componentWillMount() {
     const { config } = this.state;
+    const cheklist = this.configFormat(config);
+    this.setState({
+      form: Object.assign({}, this.state.form, { type: cheklist })
+    });
+  }
+
+  configFormat(config) {
     const cheklist = [];
 
     Object.keys(config).map((key, index) => {
-      console.log(key, config[key]);
       if (config[key] === true) {
         cheklist.push(key);
       }
     });
-    this.setState({
-      form: Object.assign({}, this.state.form, { type: cheklist })
-    });
+    return cheklist;
   }
 
   onChange(key, value) {
@@ -51,6 +57,7 @@ export default class Configure extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const { GetHost } = this.props;
     const { type } = this.state.form;
     const configCopy = Object.assign({}, this.state.config);
 
@@ -66,6 +73,8 @@ export default class Configure extends Component {
       db.set('config', this.state.config).write();
     });
     this.notify();
+
+    const returnPromise = GetHost(this.configFormat(this.state.config));
   }
 
   render() {
@@ -120,3 +129,19 @@ export default class Configure extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    progress: state.untrack.progress,
+    updateTime: state.untrack.updateTime
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  GetHost: category => dispatch(getHost(category))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Configure);

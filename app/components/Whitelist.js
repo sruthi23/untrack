@@ -18,6 +18,7 @@ export default class Whitelist extends React.PureComponent {
     super(props);
 
     this.state = {
+      state: false,
       columns: [
         {
           label: 'Domain Whitelist',
@@ -64,22 +65,33 @@ export default class Whitelist extends React.PureComponent {
     });
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
 
-    this.refs.form.validate(valid => {
+    const res = this.refs.form.validate(valid => {
       if (valid) {
         const domain = this.state.form.domain;
         db.get('whitelist')
           .pushUnique('domain', { domain })
           .write();
+        this.setState({
+          data: [
+            ...this.state.data,
+            ...[
+              {
+                domain: domain
+              }
+            ]
+          ]
+        });
         this.notify(domain);
+        this.refs.form.resetFields();
       } else {
         console.log('error submit!!');
         return false;
       }
     });
-  }
+  };
 
   handleReset(e) {
     e.preventDefault();
@@ -93,9 +105,13 @@ export default class Whitelist extends React.PureComponent {
   }
 
   componentDidMount() {
+    this.updateWhitelist();
+  }
+
+  updateWhitelist = () => {
     const whitelist = db.get('whitelist').value();
     this.setState({ data: whitelist });
-  }
+  };
 
   render() {
     return (
