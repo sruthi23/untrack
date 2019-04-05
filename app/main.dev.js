@@ -10,11 +10,31 @@
  *
  * @flow
  */
-import { app, BrowserWindow, shell, dialog } from 'electron';
+import { app, BrowserWindow, shell, dialog, Tray } from 'electron';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+const path = require('path');
 
 let mainWindow = null;
+const assetsDirectory = path.join(__dirname, 'assets');
+
+let tray = undefined;
+
+app.dock.hide();
+
+const createTray = () => {
+  tray = new Tray(path.join(assetsDirectory, 'untrack-logo-16.png'));
+  tray.on('right-click', toggleWindow);
+  tray.on('double-click', toggleWindow);
+  tray.on('click', function(event) {
+    toggleWindow();
+
+    // Show devtools when command clicked
+    if (mainWindow.isVisible() && process.defaultApp && event.metaKey) {
+      mainWindow.openDevTools({ mode: 'detach' });
+    }
+  });
+};
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -50,14 +70,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('ready', async () => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
-    await installExtensions();
-  }
-
+const createWindow = () => {
   mainWindow = new BrowserWindow({
     show: false,
     frame: false,
@@ -67,11 +80,8 @@ app.on('ready', async () => {
     minWidth: 800,
     minHeight: 560
   });
-
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
@@ -89,15 +99,34 @@ app.on('ready', async () => {
     shell.openExternal(url);
   });
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  mainWindow.on('close', event => {
+    mainWindow.hide();
+    event.preventDefault();
   });
+};
+const toggleWindow = () => {
+  if (mainWindow.isVisible()) {
+    mainWindow.hide();
+  } else {
+    showWindow();
+  }
+};
 
+const showWindow = () => {
+  mainWindow.show();
+  mainWindow.focus();
+};
+app.on('ready', async () => {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
+    await installExtensions();
+  }
+  createWindow();
+  createTray();
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
 });
 
 process.on('uncaughtException', error => {
