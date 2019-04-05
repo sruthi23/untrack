@@ -13,20 +13,19 @@
 import { app, BrowserWindow, shell, dialog, Tray } from 'electron';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+
 const path = require('path');
 
 let mainWindow = null;
 const assetsDirectory = path.join(__dirname, 'assets');
 
-let tray = undefined;
-
-app.dock.hide();
+let tray;
 
 const createTray = () => {
   tray = new Tray(path.join(assetsDirectory, 'untrack-logo-16.png'));
   tray.on('right-click', toggleWindow);
   tray.on('double-click', toggleWindow);
-  tray.on('click', function(event) {
+  tray.on('click', (event) => {
     toggleWindow();
 
     // Show devtools when command clicked
