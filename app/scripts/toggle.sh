@@ -4,11 +4,12 @@ source $(dirname $0)/functions.sh
 
 args=("$@")
 
+
 if [ ${args[0]} = 'on' ]
 then
-  onUntrack
-else
   offUntrack
+else
+  onUntrack
 fi
 
 clearDNSCache

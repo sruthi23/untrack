@@ -19,7 +19,7 @@ export default async function download(
     );
   }
 
-  const body = response.body;
+  const { body } = response;
   if (body == null) {
     throw Error('No response body');
   }

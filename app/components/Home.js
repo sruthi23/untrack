@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Carousel, Button } from 'element-react';
 import routes from '../constants/routes';
+import { initUntrack, copyScripts } from '../utils';
 
-type Props = {};
 const elms = [
   {
     title: 'Untraceable',
@@ -27,8 +27,32 @@ const elms = [
       'If you have two or more block-level elements that need to be centered horizontally in a row'
   }
 ];
-export default class Home extends Component<Props> {
-  props: Props;
+
+function ContinueLink() {
+  return (
+    <Link to={routes.CUSTOMDOMAINS} className="continueLink">
+      Continue...
+    </Link>
+  );
+}
+
+export default class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      done: false
+    };
+  }
+
+  componentDidMount() {
+    copyScripts();
+    initUntrack().then(() => {
+      this.setState({
+        done: true
+      });
+    });
+  }
 
   render() {
     return (
@@ -49,9 +73,7 @@ export default class Home extends Component<Props> {
                   </Carousel.Item>
                 ))}
               </Carousel>
-              <Link to={routes.CUSTOMDOMAINS} className="continueLink">
-                Continue...
-              </Link>
+              {this.state.done && <ContinueLink />}
             </div>
           </Layout.Col>
         </Layout.Row>

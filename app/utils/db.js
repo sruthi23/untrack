@@ -4,7 +4,6 @@ const path = require('path');
 const FileSync = require('lowdb/adapters/FileSync');
 
 const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-console.log(userDataPath);
 
 const adapter = new FileSync(path.join(userDataPath, '/db.json'));
 const db = low(adapter);

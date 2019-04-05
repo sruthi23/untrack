@@ -1,17 +1,17 @@
-import { distanceInWordsToNow } from 'date-fns';
-
 import download from '../utils/Downloader';
 import db from '../utils/db';
+import { userDataPath, defaultHosts, usersHosts } from '../utils';
 
 const getHostRequest = (category, dispatch) => {
+  console.log(usersHosts);
   const catsJoined = category.join('-').replace('unified-', '');
   const repoUrl = `https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/${catsJoined}/hosts`;
 
-  return download(repoUrl, 'app/assets/hosts/user.hosts', (bytes, percent) => {
+  return download(repoUrl, usersHosts, (bytes, percent) => {
     const progress = isNaN(bytes) ? '' : `Downloading ${bytes} bytes`;
     dispatch({
       type: 'DOWNLOAD_PROGRESS',
-      progress: progress
+      progress
     });
   });
 };

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 onUntrack () {
-  sudo cp app/assets/hosts/user.hosts /etc/hosts
+  sudo cp "${args[1]}"/user.remote.hosts /etc/hosts
 }
 
 
 offUntrack () {
-  sudo cp app/assets/hosts/default.hosts /etc/hosts
+  sudo cp "${args[1]}"/default.hosts /etc/hosts
 }
 
 

@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { distanceInWordsToNow } from 'date-fns';
 import { Notification } from 'element-react';
+import { connect } from 'react-redux';
 import db from '../utils/db';
 import download from '../utils/Downloader';
-import { connect } from 'react-redux';
 
 import { getHost } from '../actions';
 
@@ -58,12 +58,10 @@ class UpdateDatabase extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    progress: state.untrack.progress,
-    updateTime: state.untrack.updateTime
-  };
-};
+const mapStateToProps = state => ({
+  progress: state.untrack.progress,
+  updateTime: state.untrack.updateTime
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   GetHost: category => dispatch(getHost(category))

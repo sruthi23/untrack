@@ -1,31 +1,15 @@
 // @flow
 import React, { Component } from 'react';
 import { Layout } from 'element-react';
+import { connect } from 'react-redux';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 
 import db from '../utils/db';
 
-export default class CustomDomains extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      icon: 'assets/angry.svg',
-      text: 'Shoot! You are being spied.'
-    };
-  }
-
-  componentDidMount() {
-    const isRunning = db.get('isRunning').value();
-    if (isRunning) {
-      this.setState({
-        icon: 'assets/cool.svg',
-        text: 'Great you are saved from;'
-      });
-    }
-  }
-
+class CustomDomains extends Component {
   render() {
+    const { isRunning } = this.props;
     return (
       <div className="container">
         <Layout.Row className="grid">
@@ -41,8 +25,15 @@ export default class CustomDomains extends Component {
               <Layout.Row gutter="20">
                 <Layout.Col span="24">
                   <div className="grid-content masthead">
-                    <img src={this.state.icon} width="80" />
-                    <h1>{this.state.text}</h1>
+                    <img
+                      src={isRunning ? 'assets/cool.svg' : 'assets/angry.svg'}
+                      width="80"
+                    />
+                    <h1>
+                      {isRunning
+                        ? ' Great you are saved from;'
+                        : ' Shoot! You are being spied.'}
+                    </h1>
                   </div>
                 </Layout.Col>
               </Layout.Row>
@@ -51,13 +42,13 @@ export default class CustomDomains extends Component {
                   <Layout.Col span="12">
                     <div className="grid-content img">
                       <img src="assets/spy.svg" width="80" className="img" />
-                      <p>1635 General trackers</p>
+                      <p>38k+ General</p>
                     </div>
                   </Layout.Col>
                   <Layout.Col span="12" offset="1">
                     <div className="grid-content img">
                       <img src="assets/gambling.svg" width="80" />
-                      <p>976 Gambling websites</p>
+                      <p>2k+ Gambling</p>
                     </div>
                   </Layout.Col>
                 </Layout.Row>
@@ -66,17 +57,33 @@ export default class CustomDomains extends Component {
                   <Layout.Col span="12">
                     <div className="grid-content img">
                       <img src="assets/sex.svg" width="80" />
-                      <p>345 Porn websites</p>
+                      <p>12k+ Porn</p>
                     </div>
                   </Layout.Col>
 
                   <Layout.Col span="12" offset="1">
                     <div className="grid-content img">
                       <img src="assets/social.svg" width="80" />
-                      <p>564 Social Media</p>
+                      <p>2k+ Social Media</p>
                     </div>
                   </Layout.Col>
                 </Layout.Row>
+                <small>
+                  From a total of{' '}
+                  <a
+                    href="https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants"
+                    target="_blank"
+                  >
+                    55,934
+                  </a>{' '}
+                  . List manitained by{' '}
+                  <a
+                    href="https://github.com/StevenBlack/hosts"
+                    target="_blank"
+                  >
+                    StevenBlack/hosts
+                  </a>
+                </small>
               </div>
             </div>
           </Layout.Col>
@@ -85,3 +92,12 @@ export default class CustomDomains extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isRunning: state.untrack.isRunning
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(CustomDomains);

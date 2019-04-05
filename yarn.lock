@@ -974,6 +974,16 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@cloudcmd/copy-file@^1.1.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@cloudcmd/copy-file/-/copy-file-1.1.1.tgz#59749cb865c7bbc748a5642b21b089704e699121"
+  integrity sha512-t6pTJdsV0qhh9YX22/Npsv95GqVABc5GRInSK7JSSNIpPLq9TM+K7odYzcOuQRPZAD9OHxZfbYsB4WJOalzqng==
+  dependencies:
+    es6-promisify "^6.0.0"
+    pipe-io "^3.0.0"
+    wraptile "^2.0.0"
+    zames "^2.0.0"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -4111,6 +4121,11 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+currify@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/currify/-/currify-3.0.0.tgz#ec5b18fe65c2b3b08daba7f2a75a01063b2c89c2"
+  integrity sha512-ecz0Dq3T2UwiLwhiYvEFhdM4yUvlCLRgVbvpt6oI8RteJzEztum1UbLbN6snQ5nfHqtMcnrxkd7N0LeAIErorw==
+
 cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
@@ -4680,6 +4695,11 @@ electron-is-dev@^0.3.0:
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.3.0.tgz#14e6fda5c68e9e4ecbeff9ccf037cbd7c05c5afe"
   integrity sha1-FOb9pcaOnk7L7/nM8DfL18BcWv4=
 
+electron-is-dev@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-1.0.1.tgz#6e0a184736fe7aea77d18210b0b0f6a02402c4bc"
+  integrity sha512-iwM3EotA9HTXqMGpQRkR/kT8OZqBbdfHTnlwcxsjSLYqY8svvsq0MuujsWCn3/vtgRmDv/PC/gKUUpoZvi5C1w==
+
 electron-localshortcut@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/electron-localshortcut/-/electron-localshortcut-3.1.0.tgz#10c1ffd537b8d39170aaf6e1551341f7780dd2ce"
@@ -4950,6 +4970,11 @@ es6-promisify@^5.0.0:
   integrity sha1-UQnWLz5W6pZ8S2NQWu8IKRyKUgM=
   dependencies:
     es6-promise "^4.0.3"
+
+es6-promisify@^6.0.0:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-6.0.1.tgz#6edaa45f3bd570ffe08febce66f7116be4b1cdb6"
+  integrity sha512-J3ZkwbEnnO+fGAKrjVpeUAnZshAdfZvbhQpqfIH9kSAspReRC4nJnu8ewm55b4y9ElyeuhCTzJD0XiH8Tsbhlw==
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -5886,6 +5911,13 @@ fs-constants@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
+
+fs-copy-file@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/fs-copy-file/-/fs-copy-file-2.1.2.tgz#a9360c8b0e34b58239a8d38a922dab539caf1ca3"
+  integrity sha512-h5h3i58/mr86CSJvDLGV0ZEIUj4QfdfKt0NFX6AH4sRTRjs2/d5U1EQt5C9fUV6ZSi7MeSfZRW3LX9HttLXHeg==
+  dependencies:
+    "@cloudcmd/copy-file" "^1.1.0"
 
 fs-extra-p@^7.0.0, fs-extra-p@^7.0.1:
   version "7.0.1"
@@ -9882,6 +9914,11 @@ pinkie@^2.0.0, pinkie@^2.0.1, pinkie@^2.0.4:
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
 
+pipe-io@^3.0.0:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/pipe-io/-/pipe-io-3.0.11.tgz#61cf893c7887908397927675a1fb5188fffbc9c5"
+  integrity sha512-Mj9M+vdptBRBqHOf52kIDVeKVb2gLHuuqQyTemBfaK8J+5tdQhIL4RFP3bQ15G7+2Ib/RCHBinnRW7TJz4VuaA==
+
 pirates@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.1.tgz#643a92caf894566f91b2b986d2c66950a8e2fb87"
@@ -13822,6 +13859,11 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
+wraptile@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/wraptile/-/wraptile-2.0.0.tgz#fc893b8c3b10113ce219234ee6f17b5b48654c8a"
+  integrity sha512-Jzt4wTT0DJGucp4VewhbT6YutpOfBh6Ab4r5hKWTvFYsNTCxPi0U8wOsesDk1CQ+VcHyaP36BzCiKRJTROJiTQ==
+
 write-file-atomic@^2.0.0, write-file-atomic@^2.1.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/write-file-atomic/-/write-file-atomic-2.4.2.tgz#a7181706dfba17855d221140a9c06e15fcdd87b9"
@@ -14108,6 +14150,14 @@ yup@^0.26.10:
     property-expr "^1.5.0"
     synchronous-promise "^2.0.5"
     toposort "^2.0.2"
+
+zames@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/zames/-/zames-2.0.1.tgz#f52633e193699b707672e32aeb6d51a09b6c8b36"
+  integrity sha512-gJJxR12zrhOBl96d/9PorsFAEU+xUOtxOwO2lUofj8a40ahx+nxjQftzD35/GdxLzlJ5vTWh4oG81TpmKh/+hw==
+  dependencies:
+    currify "^3.0.0"
+    es6-promisify "^6.0.0"
 
 zip-stream@^1.2.0:
   version "1.2.0"

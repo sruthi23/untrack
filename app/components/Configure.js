@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Button, Checkbox, Form, Notification } from 'element-react';
+import { connect } from 'react-redux';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 import UpdateDatabase from './UpdateDatabase';
-import { connect } from 'react-redux';
 
 import { getHost } from '../actions';
 import routes from '../constants/routes';
@@ -39,8 +39,8 @@ class Configure extends Component {
   }
 
   componentDidMount() {
-    const { GetHost } = this.props;
-    GetHost(this.configFormat(this.state.config));
+    const { UpdateTime } = this.props;
+    UpdateTime();
   }
 
   configFormat(config) {
@@ -135,14 +135,17 @@ class Configure extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    progress: state.untrack.progress,
-    updateTime: state.untrack.updateTime
-  };
-};
+const mapStateToProps = state => ({
+  progress: state.untrack.progress,
+  updateTime: state.untrack.updateTime
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  UpdateTime: () =>
+    dispatch({
+      type: 'DOWNLOAD_COMPLETE',
+      updateTime: db.get('lastUpdate').value()
+    }),
   GetHost: category => dispatch(getHost(category))
 });
 

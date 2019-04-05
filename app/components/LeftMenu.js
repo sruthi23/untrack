@@ -7,6 +7,17 @@ import { connect } from 'react-redux';
 import routes from '../constants/routes';
 import db from '../utils/db';
 
+import {
+  userDataPath,
+  defaultHosts,
+  usersHosts,
+  getScriptsPath
+} from '../utils';
+
+const path = require('path');
+
+const electron = require('electron');
+
 const shell = require('shelljs');
 const sudo = require('sudo-prompt');
 
@@ -19,29 +30,12 @@ class LeftMenu extends Component {
     super(props);
     this.toggleUntrack = this.toggleUntrack.bind(this);
     this.notifyErr = this.notifyErr.bind(this);
-    this.notifySucess = this.notifySucess.bind(this);
   }
 
   notifyErr() {
     Notification.error({
       title: 'Error',
       message: 'You havent authenticated'
-    });
-  }
-
-  notifySucess() {
-    Notification({
-      title: 'Success',
-      message: 'Untrack is running',
-      type: 'success'
-    });
-  }
-
-  notifyStop() {
-    Notification({
-      title: 'Warning',
-      message: 'Untrack is stopped',
-      type: 'warning'
     });
   }
 
@@ -55,18 +49,18 @@ class LeftMenu extends Component {
     const { ToggleUntrack } = this.props;
     const isRunning = db.get('isRunning').value();
     const toggleArg = isRunning ? 'on' : 'off';
-
+    const hostsToActivate = isRunning ? usersHosts : defaultHosts;
+    const scriptPath = path.join(getScriptsPath, '/toggle.sh');
+    console.log(scriptPath, toggleArg, userDataPath);
     sudo.exec(
-      `sh app/scripts/toggle.sh ${toggleArg}`,
+      `sh ${scriptPath} ${toggleArg} "${userDataPath}"`,
       options,
       (error, stdout, stderr) => {
-        if (error) {
+        if (error || stderr) {
           this.notifyErr();
         } else {
-          db.set('config.initial', false).write();
           db.set('isRunning', !isRunning).write();
           ToggleUntrack(!isRunning);
-          isRunning ? this.notifyStop() : this.notifySucess();
         }
       }
     );
@@ -90,7 +84,7 @@ class LeftMenu extends Component {
         </div>
         <div className="navContainer">
           <NavLink to={routes.CUSTOMDOMAINS} activeClassName="active">
-            Untrack
+            <i className="el-icon-star-on" /> Untrack
           </NavLink>
           <NavLink to={routes.WHITELIIST} activeClassName="active">
             Whitelist

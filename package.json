@@ -55,10 +55,10 @@
       "git add"
     ]
   },
-  "author" : {
-    "name" : "Lightrains Tech",
-    "email" : "hello+untrack@lightrains.com",
-    "url" : "https://lightrains.com/"
+  "author": {
+    "name": "Lightrains Tech",
+    "email": "hello+untrack@lightrains.com",
+    "url": "https://lightrains.com/"
   },
   "main": "./app/main.prod.js",
   "build": {
@@ -67,11 +67,24 @@
     "files": [
       "app/dist/",
       "app/assets/",
-      "app/scripts/",
       "app/app.html",
       "app/main.prod.js",
       "app/main.prod.js.map",
       "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "app/scripts/functions.sh",
+        "to": "functions.sh"
+      },
+      {
+        "from": "app/scripts/toggle.sh",
+        "to": "toggle.sh"
+      },
+      {
+        "from": "app/assets/unified.hosts",
+        "to": "user.remote.hosts"
+      }
     ],
     "dmg": {
       "contents": [
@@ -238,9 +251,11 @@
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-dl": "^1.13.0",
+    "electron-is-dev": "^1.0.1",
     "electron-log": "^2.2.17",
     "element-react": "^1.4.33",
     "element-theme-default": "^1.4.13",
+    "fs-copy-file": "^2.1.2",
     "history": "^4.7.2",
     "lowdb": "^1.0.0",
     "react": "^16.6.3",
