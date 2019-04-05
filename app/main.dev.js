@@ -82,8 +82,6 @@ const createWindow = () => {
   });
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
@@ -115,8 +113,6 @@ const toggleWindow = () => {
 };
 
 const showWindow = () => {
-  // const position = getWindowPosition();
-  // window.setPosition(position.x, position.y, false);
   mainWindow.show();
   mainWindow.focus();
 };
@@ -131,17 +127,14 @@ app.on('ready', async () => {
   createTray();
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
 });
 
-// process.on('uncaughtException', error => {
-//   const messageBoxOptions = {
-//     type: 'error',
-//     title: 'Error in Main process',
-//     message: error
-//   };
-//   dialog.showMessageBox(messageBoxOptions);
-//   throw err;
-// });
+process.on('uncaughtException', error => {
+  const messageBoxOptions = {
+    type: 'error',
+    title: 'Error in Main process',
+    message: error
+  };
+  dialog.showMessageBox(messageBoxOptions);
+  throw err;
+});
