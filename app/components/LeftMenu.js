@@ -89,14 +89,14 @@ class LeftMenu extends Component {
           </div>
         </div>
         <div className="navContainer">
-          <NavLink to={routes.COUNTER} activeClassName="active">
-            Settings
-          </NavLink>
           <NavLink to={routes.CUSTOMDOMAINS} activeClassName="active">
-            Filter List
+            Untrack
           </NavLink>
           <NavLink to={routes.WHITELIIST} activeClassName="active">
             Whitelist
+          </NavLink>
+          <NavLink to={routes.COUNTER} activeClassName="active">
+            Settings
           </NavLink>
           <NavLink to={routes.ABOUT} activeClassName="active">
             About
@@ -107,17 +107,15 @@ class LeftMenu extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isRunning: state.untrack.isRunning
-  };
-};
+const mapStateToProps = state => ({
+  isRunning: state.untrack.isRunning
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   ToggleUntrack: isRunning =>
     dispatch({
       type: 'TOGGLE_UNTRACK',
-      isRunning: isRunning
+      isRunning
     })
 });
 

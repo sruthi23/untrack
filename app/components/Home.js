@@ -49,7 +49,7 @@ export default class Home extends Component<Props> {
                   </Carousel.Item>
                 ))}
               </Carousel>
-              <Link to={routes.COUNTER} className="continueLink">
+              <Link to={routes.CUSTOMDOMAINS} className="continueLink">
                 Continue...
               </Link>
             </div>

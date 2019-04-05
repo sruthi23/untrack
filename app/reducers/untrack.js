@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function untrack(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case 'DOWNLOAD_PROGRESS':
       return { ...state, progress: action.progress };

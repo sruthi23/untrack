@@ -55,6 +55,11 @@
       "git add"
     ]
   },
+  "author" : {
+    "name" : "Lightrains Tech",
+    "email" : "hello+untrack@lightrains.com",
+    "url" : "https://lightrains.com/"
+  },
   "main": "./app/main.prod.js",
   "build": {
     "productName": "Untrack",
