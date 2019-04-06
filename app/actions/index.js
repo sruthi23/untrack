@@ -3,10 +3,11 @@ import db from '../utils/db';
 import { userDataPath, defaultHosts, usersHosts } from '../utils';
 
 const getHostRequest = (category, dispatch) => {
-  console.log(usersHosts);
   const catsJoined = category.join('-').replace('unified-', '');
-  const repoUrl = `https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/${catsJoined}/hosts`;
-
+  const repoUrl =
+    catsJoined === 'unified'
+      ? 'https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts'
+      : `https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/${catsJoined}/hosts`;
   return download(repoUrl, usersHosts, (bytes, percent) => {
     const progress = isNaN(bytes) ? '' : `Downloading ${bytes} bytes`;
     dispatch({

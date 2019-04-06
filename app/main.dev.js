@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow, shell, dialog, Tray } from 'electron';
+import { app, BrowserWindow, shell, dialog, Tray, nativeImage } from 'electron';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
@@ -18,14 +18,15 @@ const path = require('path');
 
 let mainWindow = null;
 const assetsDirectory = path.join(__dirname, 'assets');
+const image = nativeImage.createFromPath(`${__dirname}/app/assets/icon.png`);
 
 let tray;
 
 const createTray = () => {
-  tray = new Tray(path.join(assetsDirectory, 'untrack-logo-16.png'));
+  tray = new Tray(path.join(assetsDirectory, 'icon_20.png'));
   tray.on('right-click', toggleWindow);
   tray.on('double-click', toggleWindow);
-  tray.on('click', (event) => {
+  tray.on('click', event => {
     toggleWindow();
 
     // Show devtools when command clicked
@@ -69,6 +70,7 @@ app.on('window-all-closed', () => {
   }
 });
 
+console.log(path.join(assetsDirectory, '/icon.icns'));
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     show: false,
@@ -77,7 +79,8 @@ const createWindow = () => {
     width: 800,
     height: 560,
     minWidth: 800,
-    minHeight: 560
+    minHeight: 560,
+    icon: image
   });
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

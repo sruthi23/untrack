@@ -60,7 +60,7 @@ export default class Home extends Component {
         <Layout.Row>
           <Layout.Col span="12">
             <div className="grid-content centered home-left">
-              <img src="assets/logo.svg" width="120" />
+              <img src="assets/icon.png" width="200" alt="Untrack" />
             </div>
           </Layout.Col>
           <Layout.Col span="12">
