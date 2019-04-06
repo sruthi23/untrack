@@ -1,13 +1,35 @@
 // @flow
 import React, { Component } from 'react';
-import { Layout } from 'element-react';
+import { Layout, Icon } from 'element-react';
 import { connect } from 'react-redux';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
 
 import db from '../utils/db';
 
+function IsActiveButton() {
+  return <Icon className="el-icon-circle-check" />;
+}
+
 class CustomDomains extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      config: {
+        unified: true,
+        fakenews: false,
+        gambling: false,
+        porn: false,
+        social: false
+      }
+    };
+  }
+
+  componentDidMount() {
+    const config = db.get('config').value();
+    this.setState({ config });
+  }
+
   render() {
     const { isRunning } = this.props;
     return (
@@ -41,12 +63,15 @@ class CustomDomains extends Component {
                 <Layout.Row gutter="20" justify="space-around" type="flex">
                   <Layout.Col span="12">
                     <div className="grid-content img">
+                      {this.state.config.unified && <IsActiveButton />}
                       <img src="assets/spy.svg" width="80" className="img" />
                       <p>38k+ General</p>
                     </div>
                   </Layout.Col>
                   <Layout.Col span="12" offset="1">
                     <div className="grid-content img">
+                      {this.state.config.gambling && <IsActiveButton />}
+
                       <img src="assets/gambling.svg" width="80" />
                       <p>2k+ Gambling</p>
                     </div>
@@ -56,6 +81,8 @@ class CustomDomains extends Component {
                 <Layout.Row gutter="20" justify="space-around" type="flex">
                   <Layout.Col span="12">
                     <div className="grid-content img">
+                      {this.state.config.porn && <IsActiveButton />}
+
                       <img src="assets/sex.svg" width="80" />
                       <p>12k+ Porn</p>
                     </div>
@@ -63,11 +90,27 @@ class CustomDomains extends Component {
 
                   <Layout.Col span="12" offset="1">
                     <div className="grid-content img">
+                      {this.state.config.social && <IsActiveButton />}
+
                       <img src="assets/social.svg" width="80" />
                       <p>2k+ Social Media</p>
                     </div>
                   </Layout.Col>
                 </Layout.Row>
+
+                <Layout.Row gutter="20" justify="space-around" type="flex">
+                  <Layout.Col span="12">
+                    <div className="grid-content img">
+                      {this.state.config.fakenews && <IsActiveButton />}
+                      <img src="assets/sex.svg" width="80" />
+                      <p>1k+ Fakenews</p>
+                    </div>
+                  </Layout.Col>
+                  <Layout.Col span="12" offset="1">
+                    <div className="grid-content img" />
+                  </Layout.Col>
+                </Layout.Row>
+
                 <small>
                   From a total of{' '}
                   <a

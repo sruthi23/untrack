@@ -49,6 +49,7 @@ $black: #1f2d3d;
 $light-grey: #e5e9f2;
 $light-silver: #99a9bf;
 $red: #d21626;
+$green: #66b317;
 
 body {
   height: 100vh;
@@ -138,6 +139,13 @@ button {
       // }
       p {
         font-weight: 700;
+      }
+      i {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-size: 18px;
+        color: $green;
       }
     }
   }
@@ -248,7 +256,7 @@ button {
 }
 
 .toggle.on {
-  background: #66b317;
+  background: $green;
 }
 .toggle.on:before {
   color: #fff;
