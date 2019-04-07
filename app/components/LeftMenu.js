@@ -16,7 +16,6 @@ import {
 
 const path = require('path');
 const { ipcRenderer } = require('electron');
-const shell = require('shelljs');
 const sudo = require('sudo-prompt');
 
 const options = {
@@ -41,6 +40,7 @@ class LeftMenu extends Component {
     const { ToggleUntrack } = this.props;
     const isRunning = db.get('isRunning').value();
     ToggleUntrack(isRunning);
+    ipcRenderer.send('toggle-untrack', isRunning);
   }
 
   toggleUntrack = () => {
@@ -49,7 +49,6 @@ class LeftMenu extends Component {
     const toggleArg = isRunning ? 'on' : 'off';
     const hostsToActivate = isRunning ? usersHosts : defaultHosts;
     const scriptPath = path.join(getScriptsPath, '/toggle.sh');
-    console.log(scriptPath, toggleArg, userDataPath);
     sudo.exec(
       `sh ${scriptPath} ${toggleArg} "${userDataPath}"`,
       options,
@@ -83,16 +82,16 @@ class LeftMenu extends Component {
         </div>
         <div className="navContainer">
           <NavLink to={routes.CUSTOMDOMAINS} activeClassName="active">
-            <i className="el-icon-star-on" /> Untrack
+            <i className="fas fa-shield-alt" /> Untrack
           </NavLink>
           <NavLink to={routes.WHITELIIST} activeClassName="active">
-            Whitelist
+            <i className="fas fa-user-shield" /> Whitelist
           </NavLink>
           <NavLink to={routes.COUNTER} activeClassName="active">
-            Settings
+            <i className="fas fa-tasks" /> Settings
           </NavLink>
           <NavLink to={routes.ABOUT} activeClassName="active">
-            About
+            <i className="fas fa-info-circle" /> About
           </NavLink>
         </div>
       </div>

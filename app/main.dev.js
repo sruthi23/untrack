@@ -118,9 +118,13 @@ ipcMain.on('show-window', () => {
   showWindow();
 });
 ipcMain.on('toggle-untrack', (event, arg) => {
-  arg === false
-    ? tray.setImage(path.join(__dirname, 'assets/icons/png', '16x16-grey.png'))
-    : tray.setImage(path.join(__dirname, 'assets/icons/png', '16x16.png'));
+  if (arg === false) {
+    tray.setImage(path.join(__dirname, 'assets/icons/png', '16x16-off.png'));
+    tray.setToolTip('Untrack is Stopped');
+  } else {
+    tray.setImage(path.join(__dirname, 'assets/icons/png', '16x16.png'));
+    tray.setToolTip('Untrack is Running');
+  }
 });
 
 const createWindow = () => {
@@ -133,7 +137,8 @@ const createWindow = () => {
     height: 560,
     minWidth: 800,
     minHeight: 560,
-    'node-integration': true,
+    resizable: false,
+    center: true,
     icon: path.join(__dirname, 'assets/icons/png/64x64.png')
   });
   mainWindow.loadURL(`file://${__dirname}/app.html`);

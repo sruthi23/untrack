@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { Layout, Carousel, Button } from 'element-react';
 import routes from '../constants/routes';
 import { initUntrack, copyScripts } from '../utils';
+import db from '../utils/db';
+
+const { ipcRenderer } = require('electron');
 
 const elms = [
   {
@@ -52,6 +55,9 @@ export default class Home extends Component {
         done: true
       });
     });
+
+    const isRunning = db.get('isRunning').value();
+    ipcRenderer.send('toggle-untrack', isRunning);
   }
 
   render() {
