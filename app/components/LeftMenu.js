@@ -15,9 +15,7 @@ import {
 } from '../utils';
 
 const path = require('path');
-
-const electron = require('electron');
-
+const { ipcRenderer } = require('electron');
 const shell = require('shelljs');
 const sudo = require('sudo-prompt');
 
@@ -61,6 +59,7 @@ class LeftMenu extends Component {
         } else {
           db.set('isRunning', !isRunning).write();
           ToggleUntrack(!isRunning);
+          ipcRenderer.send('toggle-untrack', !isRunning);
         }
       }
     );

@@ -46,17 +46,17 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'Electron',
+      label: 'Untrack',
       submenu: [
         {
-          label: 'About ElectronReact',
+          label: 'About Untrakc',
           selector: 'orderFrontStandardAboutPanel:'
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide ElectronReact',
+          label: 'Hide Untrakc',
           accelerator: 'Command+H',
           selector: 'hide:'
         },
@@ -149,27 +149,7 @@ export default class MenuBuilder {
         {
           label: 'Learn More',
           click() {
-            shell.openExternal('http://electron.atom.io');
-          }
-        },
-        {
-          label: 'Documentation',
-          click() {
-            shell.openExternal(
-              'https://github.com/atom/electron/tree/master/docs#readme'
-            );
-          }
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://discuss.atom.io/c/electron');
-          }
-        },
-        {
-          label: 'Search Issues',
-          click() {
-            shell.openExternal('https://github.com/atom/electron/issues');
+            shell.openExternal('http://untrack.online');
           }
         }
       ]

@@ -10,31 +10,31 @@
  *
  * @flow
  */
-import { app, BrowserWindow, shell, dialog, Tray, nativeImage } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  shell,
+  dialog,
+  Tray,
+  Menu,
+  nativeImage,
+  ipcMain
+} from 'electron';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
 const path = require('path');
 
-let mainWindow = null;
-const assetsDirectory = path.join(__dirname, 'assets');
-const image = nativeImage.createFromPath(`${__dirname}/app/assets/icon.png`);
-
+let mainWindow;
 let tray;
+let trayIcon;
 
-const createTray = () => {
-  tray = new Tray(path.join(assetsDirectory, 'icon_20.png'));
-  tray.on('right-click', toggleWindow);
-  tray.on('double-click', toggleWindow);
-  tray.on('click', event => {
-    toggleWindow();
-
-    // Show devtools when command clicked
-    if (mainWindow.isVisible() && process.defaultApp && event.metaKey) {
-      mainWindow.openDevTools({ mode: 'detach' });
-    }
-  });
-};
+// Determine appropriate icon for platform
+if (process.platform == 'darwin') {
+  trayIcon = path.join(__dirname, 'assets/icons/png', '16x16.png');
+} else if (process.platform == 'win32') {
+  trayIcon = path.join(__dirname, 'assets/icons/win', 'app.ico');
+}
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -66,21 +66,75 @@ app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.close();
   }
 });
 
-console.log(path.join(assetsDirectory, '/icon.icns'));
+// Creates tray image & toggles window on click
+const createTray = () => {
+  tray = new Tray(trayIcon);
+  tray.on('click', event => {
+    toggleWindow();
+  });
+
+  tray.on('double-click', event => {
+    toggleWindow();
+  });
+  tray.setToolTip('Untrack');
+  tray.setContextMenu(
+    Menu.buildFromTemplate([
+      {
+        label: 'Open Untrack',
+        click() {
+          mainWindow.show();
+        }
+      },
+      {
+        label: 'Quit',
+        click() {
+          app.isQuiting = true;
+          app.quit();
+        }
+      }
+    ])
+  );
+};
+
+const toggleWindow = () => {
+  if (mainWindow.isVisible()) {
+    mainWindow.hide();
+  } else {
+    showWindow();
+  }
+};
+
+const showWindow = () => {
+  mainWindow.show();
+  mainWindow.focus();
+  app.dock.show();
+};
+
+ipcMain.on('show-window', () => {
+  showWindow();
+});
+ipcMain.on('toggle-untrack', (event, arg) => {
+  arg === false
+    ? tray.setImage(path.join(__dirname, 'assets/icons/png', '16x16-grey.png'))
+    : tray.setImage(path.join(__dirname, 'assets/icons/png', '16x16.png'));
+});
+
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     show: false,
     frame: false,
+    title: 'Untrack',
     titleBarStyle: 'hiddenInset',
     width: 800,
     height: 560,
     minWidth: 800,
     minHeight: 560,
-    icon: image
+    'node-integration': true,
+    icon: path.join(__dirname, 'assets/icons/png/64x64.png')
   });
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -102,21 +156,14 @@ const createWindow = () => {
   });
 
   mainWindow.on('close', event => {
-    mainWindow.hide();
-    event.preventDefault();
+    if (!app.isQuiting) {
+      event.preventDefault();
+      mainWindow.hide();
+      mainWindow.setSkipTaskbar(true);
+      app.dock.hide();
+    }
+    return false;
   });
-};
-const toggleWindow = () => {
-  if (mainWindow.isVisible()) {
-    mainWindow.hide();
-  } else {
-    showWindow();
-  }
-};
-
-const showWindow = () => {
-  mainWindow.show();
-  mainWindow.focus();
 };
 app.on('ready', async () => {
   if (
@@ -135,8 +182,8 @@ process.on('uncaughtException', error => {
   const messageBoxOptions = {
     type: 'error',
     title: 'Error in Main process',
-    message: error
+    message: 'Error in Main process'
   };
   dialog.showMessageBox(messageBoxOptions);
-  throw err;
+  throw error;
 });
