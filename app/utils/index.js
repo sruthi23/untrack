@@ -14,7 +14,7 @@ export const usersHosts = path.join(userDataPath, '/user.remote.hosts');
 
 export const initUntrack = async () => {
   const data = `
-# This hosts file is a default non-blocking-anything
+# This hosts file is a default not-blocking-anything
 # template for Untrack
 #
 # Web: https://untrack.online
