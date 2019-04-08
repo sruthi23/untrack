@@ -16,7 +16,6 @@ db.defaults({
     porn: false,
     social: false
   },
-  initial: true,
   isRunning: false,
   whitelist: [],
   lastUpdate: new Date()

@@ -13,19 +13,31 @@ import LeftMenu from './LeftMenu';
 
 import db from '../utils/db';
 
-export default class Whitelist extends React.PureComponent {
+export default class Whitelist extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       state: false,
       columns: [
         {
           label: 'Domain Whitelist',
           prop: 'domain'
+        },
+        {
+          label: 'Delete',
+          prop: 'domain',
+          width: 100,
+          render: (data, index) => (
+            <Button
+              type="text"
+              onClick={this.removeItem.bind(this, data.domain, index)}
+            >
+              delete
+            </Button>
+          )
         }
       ],
-      data: [],
+      tableData: [],
       form: {
         domain: ''
       },
@@ -55,6 +67,8 @@ export default class Whitelist extends React.PureComponent {
       }
     };
     this.notify = this.notify.bind(this);
+    this.domainRemoved = this.domainRemoved.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   notify(domain) {
@@ -65,27 +79,54 @@ export default class Whitelist extends React.PureComponent {
     });
   }
 
+  domainRemoved(domain) {
+    Notification({
+      title: 'Removed',
+      message: `${domain} has been removed from whitelist.`,
+      type: 'info'
+    });
+  }
+
+  removeItem = (domain, index) => {
+    const array = [...this.state.tableData]; // make a separate copy of the array
+    console.log(index);
+    console.log(domain);
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ tableData: array }, () => {
+        db.get('whitelist')
+          .remove({ domain })
+          .write();
+        this.domainRemoved(domain);
+        this.refs.form.resetFields();
+      });
+    }
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-
     const res = this.refs.form.validate(valid => {
       if (valid) {
-        const domain = this.state.form.domain;
-        db.get('whitelist')
-          .pushUnique('domain', { domain })
-          .write();
-        this.setState({
-          data: [
-            ...this.state.data,
-            ...[
-              {
-                domain: domain
-              }
+        const { domain } = this.state.form;
+        this.setState(
+          {
+            tableData: [
+              ...this.state.tableData,
+              ...[
+                {
+                  domain
+                }
+              ]
             ]
-          ]
-        });
-        this.notify(domain);
-        this.refs.form.resetFields();
+          },
+          () => {
+            db.get('whitelist')
+              .pushUnique('domain', { domain })
+              .write();
+            this.notify(domain);
+            this.refs.form.resetFields();
+          }
+        );
       } else {
         console.log('error submit!!');
         return false;
@@ -110,7 +151,8 @@ export default class Whitelist extends React.PureComponent {
 
   updateWhitelist = () => {
     const whitelist = db.get('whitelist').value();
-    this.setState({ data: whitelist });
+    this.setState({ tableData: whitelist });
+    console.log(this.state.tableData);
   };
 
   render() {
@@ -155,7 +197,8 @@ export default class Whitelist extends React.PureComponent {
               <Table
                 style={{ width: '100%' }}
                 columns={this.state.columns}
-                data={this.state.data}
+                data={this.state.tableData}
+                emptyText="Empty"
               />
             </div>
           </Layout.Col>

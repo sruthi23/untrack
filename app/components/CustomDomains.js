@@ -8,7 +8,8 @@ import LeftMenu from './LeftMenu';
 import db from '../utils/db';
 
 function IsActiveButton() {
-  return <Icon className="el-icon-circle-check" />;
+  // return <Icon className="el-icon-circle-check" />;
+  return <></>;
 }
 
 class CustomDomains extends Component {
