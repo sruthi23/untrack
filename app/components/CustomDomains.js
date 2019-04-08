@@ -72,7 +72,6 @@ class CustomDomains extends Component {
                   <Layout.Col span="12" offset="1">
                     <div className="grid-content img">
                       {this.state.config.gambling && <IsActiveButton />}
-
                       <img src="assets/gambling.svg" width="80" />
                       <p>2k+ Gambling</p>
                     </div>
@@ -83,7 +82,6 @@ class CustomDomains extends Component {
                   <Layout.Col span="12">
                     <div className="grid-content img">
                       {this.state.config.porn && <IsActiveButton />}
-
                       <img src="assets/sex.svg" width="80" />
                       <p>12k+ Porn</p>
                     </div>
@@ -92,7 +90,6 @@ class CustomDomains extends Component {
                   <Layout.Col span="12" offset="1">
                     <div className="grid-content img">
                       {this.state.config.social && <IsActiveButton />}
-
                       <img src="assets/social.svg" width="80" />
                       <p>2k+ Social Media</p>
                     </div>
