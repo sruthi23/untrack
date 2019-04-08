@@ -19,7 +19,8 @@ const { ipcRenderer } = require('electron');
 const sudo = require('sudo-prompt');
 
 const options = {
-  name: 'Untrack'
+  name: 'Untrack',
+  icns: 'app/assets/icons/mac/app.icns'
 };
 
 class LeftMenu extends Component {

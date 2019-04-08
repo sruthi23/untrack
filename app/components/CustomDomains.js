@@ -103,11 +103,11 @@ class CustomDomains extends Component {
                   <Layout.Col span="12">
                     <div className="grid-content img">
                       {this.state.config.fakenews && <IsActiveButton />}
-                      <img src="assets/sex.svg" width="80" />
+                      <img src="assets/fake.svg" width="80" />
                       <p>1k+ Fakenews</p>
                     </div>
                   </Layout.Col>
-                  <Layout.Col span="12" offset="1">
+                  <Layout.Col span="12" offset="1" className="notacard">
                     <div className="grid-content img" />
                   </Layout.Col>
                 </Layout.Row>
