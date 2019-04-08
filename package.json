@@ -84,6 +84,14 @@
       {
         "from": "app/assets/unified.hosts",
         "to": "user.remote.hosts"
+      },
+      {
+        "from": "app/assets/unified.hosts",
+        "to": "unified.hosts"
+      },
+      {
+        "from": "app/assets/icons/mac/app.icns",
+        "to": "app.icns"
       }
     ],
     "dmg": {
@@ -269,6 +277,7 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "replace-in-file": "^3.4.4",
     "source-map-support": "^0.5.9",
     "sudo-prompt": "^8.2.5"
   },

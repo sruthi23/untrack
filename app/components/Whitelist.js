@@ -10,8 +10,16 @@ import {
 } from 'element-react';
 import Head from './Head';
 import LeftMenu from './LeftMenu';
-
 import db from '../utils/db';
+
+import {
+  userDataPath,
+  defaultHosts,
+  usersHosts,
+  getScriptsPath
+} from '../utils';
+
+const replace = require('replace-in-file');
 
 export default class Whitelist extends Component {
   constructor(props) {
@@ -103,41 +111,53 @@ export default class Whitelist extends Component {
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    const res = this.refs.form.validate(valid => {
-      if (valid) {
-        const { domain } = this.state.form;
-        this.setState(
-          {
-            tableData: [
-              ...this.state.tableData,
-              ...[
-                {
-                  domain
-                }
-              ]
-            ]
-          },
-          () => {
-            db.get('whitelist')
-              .pushUnique('domain', { domain })
-              .write();
-            this.notify(domain);
-            this.refs.form.resetFields();
-          }
-        );
-      } else {
-        console.log('error submit!!');
-        return false;
-      }
-    });
-  };
+    console.log(usersHosts);
+    const { domain } = this.state.form;
+    const regex = new RegExp(`.*\\b(${domain})\\b.*`, 'gi');
 
-  handleReset(e) {
-    e.preventDefault();
-    this.refs.form.resetFields();
-  }
+    const options = {
+      files: usersHosts,
+      from: regex,
+      to: ''
+    };
+
+    try {
+      const changes = await replace(options);
+      console.log('Modified files:', changes.join(', '));
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+
+    // const res = this.refs.form.validate(valid => {
+    //   if (valid) {
+    //     const { domain } = this.state.form;
+    //     this.setState(
+    //       {
+    //         tableData: [
+    //           ...this.state.tableData,
+    //           ...[
+    //             {
+    //               domain
+    //             }
+    //           ]
+    //         ]
+    //       },
+    //       () => {
+    //         db.get('whitelist')
+    //           .pushUnique('domain', { domain })
+    //           .write();
+    //         this.notify(domain);
+    //         this.refs.form.resetFields();
+    //       }
+    //     );
+    //   } else {
+    //     console.log('error submit!!');
+    //     return false;
+    //   }
+    // });
+  };
 
   onChange(key, value) {
     this.setState({
@@ -168,7 +188,7 @@ export default class Whitelist extends Component {
             <Head />
 
             <div className="grid-content home-right">
-              <h1>Whitelist</h1>
+              <h1>Domain Management</h1>
               <Form
                 ref="form"
                 model={this.state.form}
@@ -176,10 +196,12 @@ export default class Whitelist extends Component {
                 labelWidth="100"
                 className="demo-ruleForm"
                 labelPosition="top"
+                inline
               >
-                <Form.Item label="IP address or FQDN" prop="domain">
+                <Form.Item prop="domain">
                   <Input
                     type="text"
+                    placeholder="IP address or FQDN"
                     value={this.state.form.domain}
                     onChange={this.onChange.bind(this, 'domain')}
                     autoComplete="off"
@@ -188,9 +210,8 @@ export default class Whitelist extends Component {
 
                 <Form.Item>
                   <Button type="primary" onClick={this.handleSubmit.bind(this)}>
-                    Submit
+                    Search
                   </Button>
-                  <Button onClick={this.handleReset.bind(this)}>Reset</Button>
                 </Form.Item>
               </Form>
 

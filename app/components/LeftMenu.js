@@ -20,7 +20,7 @@ const sudo = require('sudo-prompt');
 
 const options = {
   name: 'Untrack',
-  icns: 'app/assets/icons/mac/app.icns'
+  icns: path.join(process.resourcesPath, 'app.icns')
 };
 
 class LeftMenu extends Component {
@@ -50,11 +50,13 @@ class LeftMenu extends Component {
     const toggleArg = isRunning ? 'on' : 'off';
     const hostsToActivate = isRunning ? usersHosts : defaultHosts;
     const scriptPath = path.join(getScriptsPath, '/toggle.sh');
+    console.log(scriptPath, toggleArg, userDataPath);
     sudo.exec(
       `sh ${scriptPath} ${toggleArg} "${userDataPath}"`,
       options,
       (error, stdout, stderr) => {
         if (error || stderr) {
+          console.log(error, stderr, stdout);
           this.notifyErr();
         } else {
           db.set('isRunning', !isRunning).write();
@@ -86,7 +88,7 @@ class LeftMenu extends Component {
             <i className="fas fa-shield-alt" /> Untrack
           </NavLink>
           <NavLink to={routes.WHITELIIST} activeClassName="active">
-            <i className="fas fa-user-shield" /> Whitelist
+            <i className="fas fa-user-shield" /> Domains
           </NavLink>
           <NavLink to={routes.COUNTER} activeClassName="active">
             <i className="fas fa-tasks" /> Settings

@@ -65,6 +65,14 @@ export const copyScripts = async () => {
       if (err) throw err;
     }
   );
+
+  copyFile(
+    `${getHostsPath}/unified.hosts`,
+    `${userDataPath}/unified.hosts`,
+    err => {
+      if (err) throw err;
+    }
+  );
 };
 export const getScriptsPath = isDev
   ? path.join(__dirname, '/scripts')
