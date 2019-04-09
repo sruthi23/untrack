@@ -4,9 +4,13 @@ const path = require('path');
 const fs = require('fs');
 const isDev = require('electron-is-dev');
 const copyFile = require('fs-copy-file');
+const mkdirp = require('mkdirp');
 
 export const userDataPath = (electron.app || electron.remote.app).getPath(
   'userData'
+);
+export const desktopPath = (electron.app || electron.remote.app).getPath(
+  'desktop'
 );
 
 export const defaultHosts = path.join(userDataPath, '/default.hosts');
@@ -46,6 +50,9 @@ ff02::3 ip6-allhosts
 };
 
 export const copyScripts = async () => {
+  mkdirp(`${desktopPath}/untrack`, function(err, data) {
+    if (err) console.error(err);
+  });
   copyFile(
     `${getScriptsPath}/functions.sh`,
     `${userDataPath}/functions.sh`,
@@ -53,7 +60,6 @@ export const copyScripts = async () => {
       if (err) throw err;
     }
   );
-
   copyFile(`${getScriptsPath}/toggle.sh`, `${userDataPath}/toggle.sh`, err => {
     if (err) throw err;
   });
@@ -73,7 +79,12 @@ export const copyScripts = async () => {
       if (err) throw err;
     }
   );
+
+  copyFile(`/etc/hosts`, `${desktopPath}/untrack/hosts`, err => {
+    if (err) throw err;
+  });
 };
+
 export const getScriptsPath = isDev
   ? path.join(__dirname, '/scripts')
   : path.join(process.resourcesPath);
