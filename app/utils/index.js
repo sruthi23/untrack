@@ -41,18 +41,33 @@ ff02::3 ip6-allhosts
 0.0.0.0 0.0.0.0
 `;
 
-  return new Promise((resolve, reject) => {
-    fs.writeFile(defaultHosts, data, err => {
-      if (err) reject(err);
-      else resolve();
-    });
+  // return new Promise((resolve, reject) => {
+  //   fs.writeFile(defaultHosts, data, err => {
+  //     if (err) reject(err);
+  //     else resolve();
+  //   });
+  // });
+  mkdirp(`${desktopPath}/untrack`, function(err, data) {
+    if (err) console.error(err);
+  });
+
+  copyFile(`/etc/hosts`, `${desktopPath}/untrack/hosts`, err => {
+    if (err) throw err;
+    copyFile(
+      `${getScriptsPath}/restore.sh`,
+      `${desktopPath}/untrack/restore.sh`,
+      err => {
+        if (err) throw err;
+      }
+    );
+  });
+
+  copyFile(`/etc/hosts`, `${defaultHosts}`, err => {
+    if (err) throw err;
   });
 };
 
 export const copyScripts = async () => {
-  mkdirp(`${desktopPath}/untrack`, function(err, data) {
-    if (err) console.error(err);
-  });
   copyFile(
     `${getScriptsPath}/functions.sh`,
     `${userDataPath}/functions.sh`,
@@ -79,10 +94,6 @@ export const copyScripts = async () => {
       if (err) throw err;
     }
   );
-
-  copyFile(`/etc/hosts`, `${desktopPath}/untrack/hosts`, err => {
-    if (err) throw err;
-  });
 };
 
 export const getScriptsPath = isDev

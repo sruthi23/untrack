@@ -65,7 +65,6 @@ class Configure extends Component {
     const { GetHost } = this.props;
     const { type } = this.state.form;
     const configCopy = Object.assign({}, this.state.config);
-
     Object.keys(configCopy).map((key, index) => {
       if (type.indexOf(key) > -1) {
         configCopy[key] = true;

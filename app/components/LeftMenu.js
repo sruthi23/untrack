@@ -19,8 +19,8 @@ const { ipcRenderer } = require('electron');
 const sudo = require('sudo-prompt');
 
 const options = {
-  name: 'Untrack',
-  icns: path.join(process.resourcesPath, 'app.icns')
+  name: 'Untrack'
+  //icns: path.join(process.resourcesPath, 'app.icns')
 };
 
 class LeftMenu extends Component {
