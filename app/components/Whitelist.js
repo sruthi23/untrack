@@ -115,7 +115,7 @@ export default class Whitelist extends Component {
     e.preventDefault();
     console.log(usersHosts);
     const { domain } = this.state.form;
-    const regex = new RegExp(`.*\\b(${domain})\\b.*`, 'gi');
+    const regex = new RegExp(`.*\\b(${domain})\\b.*\n`, 'gi');
 
     const options = {
       files: usersHosts,
