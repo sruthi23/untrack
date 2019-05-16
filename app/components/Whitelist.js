@@ -33,7 +33,6 @@ export default class Whitelist extends Component {
     super(props);
     this.state = {
       state: false,
-      toggleArg: 'delete',
       scriptPath: path.join(getScriptsPath, '/domain.sh'),
       columns: [
         {
@@ -104,6 +103,14 @@ export default class Whitelist extends Component {
     });
   }
 
+  domainAdded(domain) {
+    Notification({
+      title: 'Removed',
+      message: `${domain} has been blocked.`,
+      type: 'info'
+    });
+  }
+
   removeItem = (domain, index) => {
     const array = [...this.state.tableData]; // make a separate copy of the array
     console.log('data', index);
@@ -116,9 +123,7 @@ export default class Whitelist extends Component {
       domain
     );
     sudo.exec(
-      `sh ${this.state.scriptPath} ${
-        this.state.toggleArg
-      } "${userDataPath}" ${domain}`,
+      `sh ${this.state.scriptPath} "${userDataPath}" ${domain}`,
       options,
       (error, stdout, stderr) => {
         if (error || stderr) {
@@ -138,6 +143,39 @@ export default class Whitelist extends Component {
       }
     );
   };
+  addDomain() {
+    const array = [...this.state.tableData]; // make a separate copy of the array
+    const options = { name: 'Electron' };
+    const domain = this.state.form.domain;
+    console.log(this.state.scriptPath, userDataPath, domain);
+    sudo.exec(
+      `sh ${this.state.scriptPath} "${userDataPath}" ${domain}`,
+      options,
+      (error, stdout, stderr) => {
+        if (error || stderr) {
+          console.log(error, stderr, stdout);
+        } else {
+          let result = db
+            .get('whitelist')
+            .find({ domain: domain })
+            .value();
+          result = result ? result : 0;
+          if (result === 0) {
+            console.log('not exist');
+            this.domainAdded(domain);
+            this.refs.form.resetFields();
+          } else {
+            console.log('exist');
+            db.get('whitelist')
+              .remove({ domain: domain })
+              .write();
+            this.domainAdded(domain);
+            this.refs.form.resetFields();
+          }
+        }
+      }
+    );
+  }
 
   handleSubmit = async e => {
     e.preventDefault();
@@ -239,6 +277,11 @@ export default class Whitelist extends Component {
                 <Form.Item>
                   <Button type="primary" onClick={this.handleSubmit.bind(this)}>
                     Search
+                  </Button>
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" onClick={this.addDomain.bind(this)}>
+                    ADD
                   </Button>
                 </Form.Item>
               </Form>
