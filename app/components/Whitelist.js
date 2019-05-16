@@ -20,12 +20,21 @@ import {
 } from '../utils';
 
 const replace = require('replace-in-file');
+const sudo = require('sudo-prompt');
+const path = require('path');
+
+const options = {
+  name: 'Untrack'
+  //icns: path.join(process.resourcesPath, 'app.icns')
+};
 
 export default class Whitelist extends Component {
   constructor(props) {
     super(props);
     this.state = {
       state: false,
+      toggleArg: 'delete',
+      scriptPath: path.join(getScriptsPath, '/domain.sh'),
       columns: [
         {
           label: 'Domain Whitelist',
@@ -97,18 +106,37 @@ export default class Whitelist extends Component {
 
   removeItem = (domain, index) => {
     const array = [...this.state.tableData]; // make a separate copy of the array
-    console.log(index);
-    console.log(domain);
-    if (index !== -1) {
-      array.splice(index, 1);
-      this.setState({ tableData: array }, () => {
-        db.get('whitelist')
-          .remove({ domain })
-          .write();
-        this.domainRemoved(domain);
-        this.refs.form.resetFields();
-      });
-    }
+    console.log('data', index);
+    const options = { name: 'Electron' };
+
+    console.log(
+      this.state.scriptPath,
+      this.state.toggleArg,
+      userDataPath,
+      domain
+    );
+    sudo.exec(
+      `sh ${this.state.scriptPath} ${
+        this.state.toggleArg
+      } "${userDataPath}" ${domain}`,
+      options,
+      (error, stdout, stderr) => {
+        if (error || stderr) {
+          console.log(error, stderr, stdout);
+        } else {
+          if (index !== -1) {
+            array.splice(index, 1);
+            this.setState({ tableData: array }, () => {
+              db.get('whitelist')
+                .remove({ domain })
+                .write();
+              this.domainRemoved(domain);
+              this.refs.form.resetFields();
+            });
+          }
+        }
+      }
+    );
   };
 
   handleSubmit = async e => {
@@ -130,33 +158,33 @@ export default class Whitelist extends Component {
       console.error('Error occurred:', error);
     }
 
-    // const res = this.refs.form.validate(valid => {
-    //   if (valid) {
-    //     const { domain } = this.state.form;
-    //     this.setState(
-    //       {
-    //         tableData: [
-    //           ...this.state.tableData,
-    //           ...[
-    //             {
-    //               domain
-    //             }
-    //           ]
-    //         ]
-    //       },
-    //       () => {
-    //         db.get('whitelist')
-    //           .pushUnique('domain', { domain })
-    //           .write();
-    //         this.notify(domain);
-    //         this.refs.form.resetFields();
-    //       }
-    //     );
-    //   } else {
-    //     console.log('error submit!!');
-    //     return false;
-    //   }
-    // });
+    const res = this.refs.form.validate(valid => {
+      if (valid) {
+        const { domain } = this.state.form;
+        this.setState(
+          {
+            tableData: [
+              ...this.state.tableData,
+              ...[
+                {
+                  domain
+                }
+              ]
+            ]
+          },
+          () => {
+            db.get('whitelist')
+              .pushUnique('domain', { domain })
+              .write();
+            this.notify(domain);
+            this.refs.form.resetFields();
+          }
+        );
+      } else {
+        console.log('error submit!!');
+        return false;
+      }
+    });
   };
 
   onChange(key, value) {
