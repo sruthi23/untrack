@@ -161,11 +161,9 @@ export default class Whitelist extends Component {
             .value();
           result = result ? result : 0;
           if (result === 0) {
-            console.log('not exist');
             this.domainAdded(domain);
             this.refs.form.resetFields();
           } else {
-            console.log('exist');
             db.get('whitelist')
               .remove({ domain: domain })
               .write();
