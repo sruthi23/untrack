@@ -43,7 +43,7 @@ export default class Whitelist extends Component {
           label: 'Delete',
           prop: 'domain',
           width: 100,
-          render: (data, index) => (
+          render: (data, column, index) => (
             <Button
               type="text"
               onClick={this.removeItem.bind(this, data.domain, index)}
@@ -113,15 +113,8 @@ export default class Whitelist extends Component {
 
   removeItem = (domain, index) => {
     const array = [...this.state.tableData]; // make a separate copy of the array
-    console.log('data', index);
     const options = { name: 'Electron' };
-
-    console.log(
-      this.state.scriptPath,
-      this.state.toggleArg,
-      userDataPath,
-      domain
-    );
+    console.log(this.state.scriptPath, userDataPath, domain);
     sudo.exec(
       `sh ${this.state.scriptPath} "${userDataPath}" ${domain}`,
       options,
@@ -129,25 +122,22 @@ export default class Whitelist extends Component {
         if (error || stderr) {
           console.log(error, stderr, stdout);
         } else {
-          if (index !== -1) {
-            array.splice(index, 1);
-            this.setState({ tableData: array }, () => {
-              db.get('whitelist')
-                .remove({ domain })
-                .write();
-              this.domainRemoved(domain);
-              this.refs.form.resetFields();
-            });
-          }
+          array.splice(index, 1);
+          this.setState({ tableData: array }, () => {
+            db.get('whitelist')
+              .remove({ domain })
+              .write();
+            this.domainRemoved(domain);
+            this.refs.form.resetFields();
+          });
         }
       }
     );
   };
   addDomain() {
-    const array = [...this.state.tableData]; // make a separate copy of the array
     const options = { name: 'Electron' };
+    const array = [...this.state.tableData];
     const domain = this.state.form.domain;
-    console.log(this.state.scriptPath, userDataPath, domain);
     sudo.exec(
       `sh ${this.state.scriptPath} "${userDataPath}" ${domain}`,
       options,
@@ -164,11 +154,15 @@ export default class Whitelist extends Component {
             this.domainAdded(domain);
             this.refs.form.resetFields();
           } else {
-            db.get('whitelist')
-              .remove({ domain: domain })
-              .write();
-            this.domainAdded(domain);
-            this.refs.form.resetFields();
+            const index = array.findIndex(x => x.domain === domain);
+            array.splice(index, 1);
+            this.setState({ tableData: array }, () => {
+              db.get('whitelist')
+                .remove({ domain })
+                .write();
+              this.domainAdded(domain);
+              this.refs.form.resetFields();
+            });
           }
         }
       }
@@ -177,7 +171,6 @@ export default class Whitelist extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    console.log(usersHosts);
     const { domain } = this.state.form;
     const regex = new RegExp(`.*\\b(${domain})\\b.*\n`, 'gi');
 
@@ -235,8 +228,9 @@ export default class Whitelist extends Component {
 
   updateWhitelist = () => {
     const whitelist = db.get('whitelist').value();
-    this.setState({ tableData: whitelist });
-    console.log(this.state.tableData);
+    this.setState({ tableData: whitelist }, () => {
+      console.log(this.state.tableData);
+    });
   };
 
   render() {
