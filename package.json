@@ -78,6 +78,10 @@
         "to": "functions.sh"
       },
       {
+        "from": "app/scripts/restore.sh",
+        "to": "restore.sh"
+      },
+      {
         "from": "app/scripts/toggle.sh",
         "to": "toggle.sh"
       },
