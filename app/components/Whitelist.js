@@ -190,15 +190,15 @@ export default class Whitelist extends Component {
     const res = this.refs.form.validate(valid => {
       if (valid) {
         const { domain } = this.state.form;
+        this.refs.form.resetFields();
         this.setState(
           {
             tableData: [
               ...this.state.tableData,
-              ...[
-                {
-                  domain
-                }
-              ]
+
+              {
+                domain
+              }
             ]
           },
           () => {
@@ -206,7 +206,6 @@ export default class Whitelist extends Component {
               .pushUnique('domain', { domain })
               .write();
             this.notify(domain);
-            this.refs.form.resetFields();
           }
         );
       } else {

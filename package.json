@@ -92,6 +92,10 @@
       {
         "from": "app/assets/icons/mac/app.icns",
         "to": "app.icns"
+      },
+      {
+        "from": "app/scripts/restore.sh",
+        "to": "restore.sh"
       }
     ],
     "dmg": {
