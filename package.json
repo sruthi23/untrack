@@ -78,10 +78,6 @@
         "to": "functions.sh"
       },
       {
-        "from": "app/scripts/restore.sh",
-        "to": "restore.sh"
-      },
-      {
         "from": "app/scripts/toggle.sh",
         "to": "toggle.sh"
       },
@@ -100,6 +96,14 @@
       {
         "from": "app/scripts/restore.sh",
         "to": "restore.sh"
+      },
+      {
+        "from": "app/scripts/domain.sh",
+        "to": "domain.sh"
+      },
+      {
+        "from": "app/scripts/update.sh",
+        "to": "update.sh"
       }
     ],
     "dmg": {

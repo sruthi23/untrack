@@ -2,7 +2,7 @@
 
 onUntrack () {
   sudo cp "${args[1]}"/user.remote.hosts /etc/
-  sudo cat app/assets/unified.hosts >> /etc/hosts
+  sudo cat "${args[1]}"/user.remote.hosts >> /etc/hosts
 
 }
 
