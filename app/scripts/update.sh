@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-source $(dirname $0)/functions.sh
+args=("$@")
 
-onUntrack
-
-clearDNSCache
+sudo cp "${args[0]}"/user.remote.hosts /etc/hosts
 
 echo 'success'

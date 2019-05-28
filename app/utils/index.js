@@ -6,9 +6,10 @@ const isDev = require('electron-is-dev');
 const copyFile = require('fs-copy-file');
 const mkdirp = require('mkdirp');
 
-export const userDataPath = (electron.app || electron.remote.app).getPath(
-  'userData'
-);
+export const userDataPath = process.resourcesPath;
+// (electron.app || electron.remote.app).getPath(
+//   'userData'
+// );
 export const desktopPath = (electron.app || electron.remote.app).getPath(
   'desktop'
 );
@@ -87,15 +88,14 @@ export const copyScripts = async () => {
     }
   );
 
-  copyFile(
-    `${getHostsPath}/unified.hosts`,
-    `${userDataPath}/unified.hosts`,
-    err => {
-      if (err) throw err;
-    }
-  );
+  // copyFile(
+  //   `${getHostsPath}/unified.hosts`,
+  //   `${userDataPath}/unified.hosts`,
+  //   err => {
+  //     if (err) throw err;
+  //   }
+  // );
 };
-
 export const getScriptsPath = isDev
   ? path.join(__dirname, '/scripts')
   : path.join(process.resourcesPath);

@@ -172,17 +172,27 @@ export default class Whitelist extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     const { domain } = this.state.form;
+    const scriptPath = path.join(getScriptsPath, '/update.sh');
     const regex = new RegExp(`.*\\b(${domain})\\b.*\n`, 'gi');
-
+    console.log('usersHosts', usersHosts, regex, scriptPath);
+    const opt = { name: 'untrack' };
     const options = {
       files: usersHosts,
       from: regex,
       to: ''
     };
-
     try {
       const changes = await replace(options);
       console.log('Modified files:', changes.join(', '));
+      sudo.exec(
+        `sh ${scriptPath} "${userDataPath}" ${domain}`,
+        opt,
+        (error, stdout, stderr) => {
+          if (error || stderr) {
+            console.log(error, stderr, stdout);
+          }
+        }
+      );
     } catch (error) {
       console.error('Error occurred:', error);
     }
