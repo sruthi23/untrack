@@ -282,7 +282,7 @@
     "history": "^4.7.2",
     "lowdb": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "react": "^16.6.3",
+    "react": "16.6.3",
     "react-dom": "^16.6.3",
     "react-hot-loader": "^4.3.12",
     "react-redux": "^5.1.1",
