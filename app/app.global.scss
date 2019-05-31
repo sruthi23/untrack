@@ -1,0 +1,307 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+@import '~element-theme-default/lib/reset.css';
+@import '~element-theme-default/lib/index.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+/* Your local CSS File */
+/* pt-sans-regular - latin */
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Sans'), local('PTSans-Regular'),
+    url('assets/fonts/pt-sans-v10-latin-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('PT Sans Bold'), local('PTSans-Bold'),
+    url('assets/fonts/pt-sans-v10-latin-700.ttf') format('truetype');
+}
+
+$light-black: #324057;
+$dark-white: #f9fafc;
+$black: #1f2d3d;
+$light-grey: #e5e9f2;
+$light-silver: #99a9bf;
+$red: #d21626;
+$green: #66b317;
+
+body {
+  height: 100vh;
+  padding: 0;
+  background: $light-grey;
+  color: $black;
+  font-size: 1rem !important;
+  font-family: 'PT Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $black;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  line-height: 23px;
+}
+.titlebar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.titlebar-button {
+  -webkit-app-region: no-drag;
+}
+button {
+  -webkit-app-region: no-drag;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  .el-row {
+    .el-col {
+      height: 100vh;
+      &:first-of-type {
+        background: $black;
+        position: fixed;
+      }
+      &:last-child {
+        padding: 0 !important;
+        overflow: scroll;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        float: right;
+      }
+    }
+  }
+}
+.container .home-right {
+  .el-row {
+    margin: 20px 0;
+  }
+  .el-col {
+    height: auto !important;
+    background: none !important;
+    position: inherit !important;
+    .grid-content.img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .grid-content.masthead img {
+      margin-right: 10px;
+    }
+    &.el-col-12 {
+      box-shadow: 0 3px 7px -1px rgba(#333, 0.1);
+      border-radius: 5px;
+      background: #fff !important;
+      padding: 15px 0 !important;
+      box-sizing: border-box;
+      // &:hover {
+      //   box-shadow: unset;
+      //   background: $light-grey !important;
+      // }
+      p {
+        font-weight: 700;
+      }
+      i {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-size: 18px;
+        color: $green;
+      }
+    }
+  }
+  p,
+  .el-checkbox__label {
+    line-height: 25px;
+    font-size: 1.2rem;
+    margin: 15px 0 !important;
+  }
+}
+.home-left,
+.home-right {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.el-carousel__button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: $light-silver;
+}
+.el-carousel__indicator.is-active .el-carousel__button {
+  background-color: $red;
+}
+
+.headbar {
+  padding: 10px 0;
+}
+
+.el-checkbox {
+  display: block;
+  margin: 0 !important;
+}
+
+.el-checkbox + .el-checkbox {
+  margin: 0 !important;
+}
+.leftmenu {
+  a {
+    display: block;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    color: $dark-white;
+    font-weight: bold;
+    &.active {
+      background: $light-grey;
+      color: $black;
+    }
+  }
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+}
+
+.toggle {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 50px;
+  background: $red;
+  border-radius: 5px;
+  transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+.toggle:before,
+.toggle:after {
+  position: absolute;
+  line-height: 50px;
+  font-size: 14px;
+  z-index: 2;
+  transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+.toggle:before {
+  content: 'OFF';
+  left: 20px;
+  color: #d21626;
+}
+.toggle:after {
+  content: 'ON';
+  right: 20px;
+  color: #fff;
+}
+
+.toggle__handler {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  width: 65px;
+  height: 44px;
+  border-radius: 3px;
+  top: 3px;
+  left: 3px;
+  transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+}
+
+.toggle.on {
+  background: $green;
+}
+.toggle.on:before {
+  color: #fff;
+}
+.toggle.on:after {
+  color: #66b317;
+}
+.toggle.on .toggle__handler {
+  width: 54px;
+  -webkit-transform: translateX(60px);
+  transform: translateX(60px);
+  border-color: #fff;
+}
+
+.home-right {
+  padding: 40px;
+}
+
+ol {
+  li {
+    margin: 10px 0;
+  }
+}
+.clear::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+.carousel {
+  padding-top: 35vh;
+}
+.continueLink {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+.footer {
+  position: fixed;
+  background: #ff0303;
+  bottom: 0;
+  right: 0;
+  height: 30px;
+}
+.el-notification__content {
+  text-align: left !important;
+}
+
+.welcome {
+  img,
+  h1 {
+    float: left;
+  }
+  h1 {
+    font-size: 2rem;
+    line-height: 5rem;
+  }
+}
+
+.masthead {
+  margin-bottom: 50px;
+}
+
+.el-col.el-col-12.el-col-offset-1.notacard {
+  border: 0 none !important;
+  background: none !important;
+  box-shadow: unset !important;
+}
