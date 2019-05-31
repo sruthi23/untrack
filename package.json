@@ -142,12 +142,12 @@
     "publish": {
       "provider": "github",
       "owner": "sruthi23",
+      "repo": "https://github.com/sruthi23/untrack.git"
       "token": "fe396183ef6394661b59b9e48df522097d4250d6"
     }
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/sruthi23/untrack.git"
+    "type": "git"
   },
   "license": "MIT",
   "keywords": [
@@ -283,7 +283,7 @@
     "lowdb": "^1.0.0",
     "mkdirp": "^0.5.1",
     "react": "16.6.3",
-    "react-dom": "^16.6.3",
+    "react-dom": "16.6.3",
     "react-hot-loader": "^4.3.12",
     "react-redux": "^5.1.1",
     "react-router": "^4.3.1",
