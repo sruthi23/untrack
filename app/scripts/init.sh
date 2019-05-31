@@ -6,6 +6,6 @@ backup
 
 offUntrack
 
-clearDNSCache
+#clearDNSCache
 
 echo 'success'

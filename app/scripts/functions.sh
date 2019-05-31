@@ -18,8 +18,8 @@ backup () {
 }
 
 
-clearDNSCache() {
+#clearDNSCache() {
   # clear DNS cache
-  sudo dscacheutil -flushcache
-  sudo killall -HUP mDNSResponder
-}
+#  sudo dscacheutil -flushcache
+#  sudo killall -HUP mDNSResponder
+#}

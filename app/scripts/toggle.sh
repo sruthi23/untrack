@@ -12,6 +12,6 @@ else
   onUntrack
 fi
 
-clearDNSCache
+#clearDNSCache
 
 echo 'success'
