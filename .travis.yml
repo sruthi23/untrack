@@ -82,3 +82,9 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn test; fi
   - yarn build-e2e
   - yarn test-e2e
+deploy:
+  skip_cleanup: true
+  github_token: $github_token
+  local_dir: build
+  on:
+    branch: master
