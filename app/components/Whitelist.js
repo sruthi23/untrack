@@ -14,7 +14,7 @@ import db from '../utils/db';
 
 import {
   userDataPath,
-  defaultHosts,
+  //  defaultHosts,
   usersHosts,
   getScriptsPath
 } from '../utils';
@@ -32,7 +32,7 @@ export default class Whitelist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      state: false,
+      //state: false,
       scriptPath: path.join(getScriptsPath, '/domain.sh'),
       columns: [
         {
@@ -87,33 +87,9 @@ export default class Whitelist extends Component {
     this.removeItem = this.removeItem.bind(this);
   }
 
-  notify(domain) {
-    Notification({
-      title: 'Success',
-      message: `${domain} has been added to whitelist.`,
-      type: 'success'
-    });
-  }
-
-  domainRemoved(domain) {
-    Notification({
-      title: 'Removed',
-      message: `${domain} has been removed from whitelist.`,
-      type: 'info'
-    });
-  }
-
-  domainAdded(domain) {
-    Notification({
-      title: 'Removed',
-      message: `${domain} has been blocked.`,
-      type: 'info'
-    });
-  }
-
   removeItem = (domain, index) => {
     const array = [...this.state.tableData]; // make a separate copy of the array
-    const options = { name: 'Electron' };
+    //  const options = { name: 'Electron' };
     console.log(this.state.scriptPath, userDataPath, domain);
     sudo.exec(
       `bash ${this.state.scriptPath} "${userDataPath}" ${domain}`,
@@ -135,7 +111,7 @@ export default class Whitelist extends Component {
     );
   };
   addDomain() {
-    const options = { name: 'Electron' };
+    //const options = { name: 'Electron' };
     const array = [...this.state.tableData];
     const domain = this.state.form.domain;
     sudo.exec(
@@ -233,6 +209,30 @@ export default class Whitelist extends Component {
 
   componentDidMount() {
     this.updateWhitelist();
+  }
+
+  notify(domain) {
+    Notification({
+      title: 'Success',
+      message: `${domain} has been added to whitelist.`,
+      type: 'success'
+    });
+  }
+
+  domainRemoved(domain) {
+    Notification({
+      title: 'Removed',
+      message: `${domain} has been removed from whitelist.`,
+      type: 'info'
+    });
+  }
+
+  domainAdded(domain) {
+    Notification({
+      title: 'Removed',
+      message: `${domain} has been blocked.`,
+      type: 'info'
+    });
   }
 
   updateWhitelist = () => {
