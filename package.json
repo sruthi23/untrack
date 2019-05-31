@@ -142,7 +142,7 @@
     "publish": {
       "provider": "github",
       "owner": "sruthi23",
-      "repo": "https://github.com/sruthi23/untrack.git"
+      "repo": "https://github.com/sruthi23/untrack.git",
       "token": "fe396183ef6394661b59b9e48df522097d4250d6"
     }
   },
