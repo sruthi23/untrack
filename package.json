@@ -142,13 +142,12 @@
     "publish": {
       "provider": "github",
       "owner": "sruthi23",
-      "repo": "untrack.git",
       "token": "fe396183ef6394661b59b9e48df522097d4250d6"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sruthi23/untrack.git"
+    "url": "https://github.com/sruthi23/untrack.git"
   },
   "license": "MIT",
   "keywords": [
