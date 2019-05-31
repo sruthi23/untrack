@@ -9,7 +9,7 @@ import LeftMenu from './LeftMenu';
 
 import routes from '../constants/routes';
 
-export default class About extends Component {
+export default class About extends Component<Props,State=void> {
   render() {
     return (
       <div className="container">
