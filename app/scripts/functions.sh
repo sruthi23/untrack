@@ -18,8 +18,14 @@ backup () {
 }
 
 
-#clearDNSCache() {
-  # clear DNS cache
-#  sudo dscacheutil -flushcache
-#  sudo killall -HUP mDNSResponder
-#}
+clearDNSCache() {
+  #clear DNS cache
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+   sudo service dns-clean restart
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+   sudo dscacheutil -flushcache
+   sudo killall -HUP mDNSResponder
+elif [[ "$OSTYPE" == "win32" ]]; then
+   sudo ipconfig /flushdns
+fi
+}
