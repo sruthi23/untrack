@@ -140,16 +140,15 @@
       "output": "release"
     },
     "publish": {
-      "provider": "github",
-      "owner": "sruthi23",
-      "url": "https://github.com/sruthi23/untrack.git",
-      "token": "fe396183ef6394661b59b9e48df522097d4250d6"
-    }
-  },
-  "repository": {
-    "type": "git"
-
-  },
+       "provider": "github",
+       "url": "https://github.com/sruthi23/untrack.git",
+       "private": false
+     }
+   },
+   "repository": {
+     "type": "git",
+     "url": "git+https://github.com/sruthi23/untrack.git"
+ },
   "license": "MIT",
   "keywords": [
     "untrack",
@@ -212,7 +211,7 @@
     "css-loader": "^1.0.1",
     "detect-port": "^1.3.0",
     "devtron": "^1.4.0",
-    "electron": "^4.1.3",
+    "electron": "3.1.6",
     "electron-builder": "^20.39.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-icon-generator": "^1.0.2",

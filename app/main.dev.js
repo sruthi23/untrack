@@ -17,10 +17,8 @@ import {
   dialog,
   Tray,
   Menu,
-  nativeImage,
   ipcMain
 } from 'electron';
-import log from 'electron-log';
 import MenuBuilder from './menu';
 
 const path = require('path');
@@ -30,11 +28,11 @@ let tray;
 let trayIcon;
 
 // Determine appropriate icon for platform
-if (process.platform == 'darwin') {
+if (process.platform === 'darwin') {
   trayIcon = path.join(__dirname, 'assets/icons/png', '16x16.png');
-} else if (process.platform == 'win32') {
+} else if (process.platform === 'win32') {
   trayIcon = path.join(__dirname, 'assets/icons/win', 'app.ico');
-} else if (process.platform == 'linux') {
+} else if (process.platform === 'linux') {
   trayIcon = path.join(__dirname, 'assets/icons/png', '16x16.png');
 }
 if (process.env.NODE_ENV === 'production') {
@@ -75,11 +73,11 @@ app.on('window-all-closed', () => {
 const createTray = () => {
   tray = new Tray(trayIcon);
   tray.on('click', event => {
-    toggleWindow();
+    if (event) toggleWindow();
   });
 
   tray.on('double-click', event => {
-    toggleWindow();
+    if (event) toggleWindow();
   });
   tray.setToolTip('Untrack');
   tray.setContextMenu(
@@ -166,7 +164,7 @@ const createWindow = () => {
       event.preventDefault();
       mainWindow.hide();
       mainWindow.setSkipTaskbar(true);
-      app.dock.hide();
+      //    app.dock.hide();
     }
     return false;
   });
