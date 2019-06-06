@@ -10,7 +10,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 sudo yes | sudo cp -rf "$HOME/Desktop/untrack/hosts" /etc/hosts
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "linux" ]]; then
    sudo service dns-clean restart
 elif [[ "$OSTYPE" == "darwin"* ]]; then
    sudo dscacheutil -flushcache

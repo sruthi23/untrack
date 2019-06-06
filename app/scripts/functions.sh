@@ -17,10 +17,8 @@ backup () {
   sudo \cp /etc/hosts app/assets/hosts/original.backup
 }
 
-
-clearDNSCache() {
-  #clear DNS cache
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+clearDNSCache(){
+if [[ "$OSTYPE" == "linux" ]]; then
    sudo service dns-clean restart
 elif [[ "$OSTYPE" == "darwin"* ]]; then
    sudo dscacheutil -flushcache
