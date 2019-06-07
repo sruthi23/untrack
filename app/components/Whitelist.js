@@ -25,14 +25,14 @@ const path = require('path');
 
 const options = {
   name: 'Untrack'
-  //icns: path.join(process.resourcesPath, 'app.icns')
+  // icns: path.join(process.resourcesPath, 'app.icns')
 };
 
 export default class Whitelist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //state: false,
+      // state: false,
       scriptPath: path.join(getScriptsPath, '/domain.sh'),
       columns: [
         {
@@ -66,16 +66,18 @@ export default class Whitelist extends Component {
           },
           {
             validator: (rule, value, callback) => {
-              const loclPattern = /^localhost$|^127(?:\.[0-9]+){0,2}\.[0-9]+$|^(?:0*\:)*?:?0*1$/;
+              const loclPattern = /^localhost$|^127(?:\.[0-9]+){0,2}\.[0-9]+$|^(?:0*:)*?:?0*1$/;
               const locRes = loclPattern.test(value);
               if (locRes) {
-                new Error('Invalid fqdn or ip address format');
+                Error('Invalid fqdn or ip address format');
               } else {
                 const patt = /^((\*)[]|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-]+\.[a-zA-Z]{2,63}?))$/;
                 const k = patt.test(value);
-                k
-                  ? callback()
-                  : callback(new Error('Invalid fqdn or ip address format'));
+                try {
+                  if (k) callback();
+                } catch (e) {
+                  callback(Error('Invalid fqdn or ip address format'));
+                }
               }
             }
           }
@@ -87,12 +89,15 @@ export default class Whitelist extends Component {
     this.removeItem = this.removeItem.bind(this);
   }
 
+  componentDidMount() {
+    this.updateWhitelist();
+  }
+
   removeItem = (domain, index) => {
-    const array = [...this.state.tableData]; // make a separate copy of the array
-    //  const options = { name: 'Electron' };
-    console.log(this.state.scriptPath, userDataPath, domain);
+    const { tableData, scriptPath } = this.state;
+    const array = [tableData]; // make a separate copy of the array
     sudo.exec(
-      `bash ${this.state.scriptPath} "${userDataPath}" ${domain}`,
+      `bash ${scriptPath} "${userDataPath}" ${domain}`,
       options,
       (error, stdout, stderr) => {
         if (error || stderr) {
@@ -110,23 +115,23 @@ export default class Whitelist extends Component {
       }
     );
   };
+
   addDomain() {
-    //const options = { name: 'Electron' };
-    const array = [...this.state.tableData];
-    const domain = this.state.form.domain;
+    const { tableData, form, scriptPath } = this.state;
+    const array = [tableData];
+    const { domain } = { ...form };
     sudo.exec(
-      `bash ${this.state.scriptPath} "${userDataPath}" ${domain}`,
+      `bash ${scriptPath} "${userDataPath}" ${domain}`,
       options,
       (error, stdout, stderr) => {
         if (error || stderr) {
           console.log(error, stderr, stdout);
         } else {
-          let result = db
+          const result = db
             .get('whitelist')
-            .find({ domain: domain })
+            .find({ domain })
             .value();
-          result = result ? result : 0;
-          if (result === 0) {
+          if (result.length === 0) {
             this.domainAdded(domain);
             this.refs.form.resetFields();
           } else {
@@ -147,18 +152,20 @@ export default class Whitelist extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    const { domain } = this.state.form;
+    const { form } = this.state;
+    const { domain } = { ...form };
+    console.log('domain', domain);
     const scriptPath = path.join(getScriptsPath, '/update.sh');
     const regex = new RegExp(`.*\\b(${domain})\\b.*\n`, 'gi');
     console.log('usersHosts', usersHosts, regex, scriptPath);
     const opt = { name: 'untrack' };
-    const options = {
+    const option = {
       files: usersHosts,
       from: regex,
       to: ''
     };
     try {
-      const changes = await replace(options);
+      const changes = await replace(option);
       console.log('Modified files:', changes.join(', '));
       sudo.exec(
         `bash ${scriptPath} "${userDataPath}" ${domain}`,
@@ -166,83 +173,77 @@ export default class Whitelist extends Component {
         (error, stdout, stderr) => {
           if (error || stderr) {
             console.log(error, stderr, stdout);
+          } else {
+            this.refs.form.validate(valid => {
+              if (valid) {
+                this.refs.form.resetFields();
+                this.setState(
+                  {
+                    tableData: [
+                      ...this.state.tableData,
+                      {
+                        domain
+                      }
+                    ]
+                  },
+                  () => {
+                    db.get('whitelist')
+                      .pushUnique('domain', { domain })
+                      .write();
+                    this.notify(domain);
+                  }
+                );
+              } else {
+                console.log('error submit!!');
+                return false;
+              }
+            });
           }
         }
       );
     } catch (error) {
       console.error('Error occurred:', error);
     }
-
-    const res = this.refs.form.validate(valid => {
-      if (valid) {
-        const { domain } = this.state.form;
-        this.refs.form.resetFields();
-        this.setState(
-          {
-            tableData: [
-              ...this.state.tableData,
-
-              {
-                domain
-              }
-            ]
-          },
-          () => {
-            db.get('whitelist')
-              .pushUnique('domain', { domain })
-              .write();
-            this.notify(domain);
-          }
-        );
-      } else {
-        console.log('error submit!!');
-        return false;
-      }
-    });
   };
 
   onChange(key, value) {
+    const { form } = this.state;
     this.setState({
-      form: Object.assign({}, this.state.form, { [key]: value })
+      form: Object.assign({}, { form }, { [key]: value })
     });
   }
 
-  componentDidMount() {
-    this.updateWhitelist();
-  }
-
-  notify(domain) {
+  notify = domain => {
     Notification({
       title: 'Success',
       message: `${domain} has been added to whitelist.`,
       type: 'success'
     });
-  }
+  };
 
-  domainRemoved(domain) {
+  domainRemoved = domain => {
     Notification({
       title: 'Removed',
       message: `${domain} has been removed from whitelist.`,
       type: 'info'
     });
-  }
+  };
 
-  domainAdded(domain) {
+  domainAdded = domain => {
     Notification({
       title: 'Removed',
       message: `${domain} has been blocked.`,
       type: 'info'
     });
-  }
+  };
 
   updateWhitelist = () => {
     const whitelist = db.get('whitelist').value();
-    this.setState({ tableData: whitelist }, () => {
-      console.log(this.state.tableData);
-    });
+    this.setState({ tableData: whitelist }, () => {});
   };
 
   render() {
+    const { columns, tableData, form, rules } = this.state;
     return (
       <div className="container">
         <Layout.Row>
@@ -258,8 +259,8 @@ export default class Whitelist extends Component {
               <h1>Domain Management</h1>
               <Form
                 ref="form"
-                model={this.state.form}
-                rules={this.state.rules}
+                model={form}
+                rules={rules}
                 labelWidth="100"
                 className="demo-ruleForm"
                 labelPosition="top"
@@ -269,7 +270,7 @@ export default class Whitelist extends Component {
                   <Input
                     type="text"
                     placeholder="IP address or FQDN"
-                    value={this.state.form.domain}
+                    value={form.domain}
                     onChange={this.onChange.bind(this, 'domain')}
                     autoComplete="off"
                   />
@@ -289,8 +290,8 @@ export default class Whitelist extends Component {
 
               <Table
                 style={{ width: '100%' }}
-                columns={this.state.columns}
-                data={this.state.tableData}
+                columns={columns}
+                data={tableData}
                 emptyText="Empty"
               />
             </div>
