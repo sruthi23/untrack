@@ -94,8 +94,8 @@ export default class Whitelist extends Component {
   }
 
   removeItem = (domain, index) => {
-    const { tableData, scriptPath } = this.state;
-    const array = [tableData]; // make a separate copy of the array
+    const { scriptPath } = this.state;
+    const array = [...this.state.tableData]; // make a separate copy of the array
     sudo.exec(
       `bash ${scriptPath} "${userDataPath}" ${domain}`,
       options,
@@ -117,8 +117,8 @@ export default class Whitelist extends Component {
   };
 
   addDomain() {
-    const { tableData, form, scriptPath } = this.state;
-    const array = [tableData];
+    const { form, scriptPath } = this.state;
+    const array = [...this.state.tableData];
     const { domain } = { ...form };
     sudo.exec(
       `bash ${scriptPath} "${userDataPath}" ${domain}`,
