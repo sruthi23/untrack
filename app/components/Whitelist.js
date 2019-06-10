@@ -127,10 +127,7 @@ export default class Whitelist extends Component {
         if (error || stderr) {
           console.log(error, stderr, stdout);
         } else {
-          const result = db
-            .get('whitelist')
-            .find({ domain })
-            .value();
+          const result = db.get('whitelist').find({ domain });
           if (result.length === 0) {
             this.domainAdded(domain);
             this.refs.form.resetFields();
