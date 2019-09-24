@@ -140,15 +140,15 @@
       "output": "release"
     },
     "publish": {
-       "provider": "github",
-       "url": "https://github.com/sruthi23/untrack.git",
-       "private": false
-     }
-   },
-   "repository": {
-     "type": "git",
-     "url": "git+https://github.com/sruthi23/untrack.git"
- },
+      "provider": "github",
+      "url": "https://github.com/niksmac/untrack.git",
+      "private": false
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niksmac/untrack.git"
+  },
   "license": "MIT",
   "keywords": [
     "untrack",
